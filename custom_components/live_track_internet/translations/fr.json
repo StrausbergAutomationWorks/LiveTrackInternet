@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Affiche les pannes d'internet sur la carte Live Track : les fiches de panne de Cloudflare Radar, un marqueur pour chaque panne en cours, placé dans le pays ou la région qu'elle indique. Il vous faut votre propre jeton d'API Cloudflare, gratuit. Créez-le sur {token_url} : choisissez un jeton personnalisé (« Custom token ») et donnez-lui l'autorisation Account > Radar > Read. Home Assistant s'en sert pour demander la liste des pannes à Cloudflare toutes les 15 minutes. Les données de Cloudflare Radar sont sous licence CC BY-NC 4.0, pour un usage non commercial. Cette traduction a été écrite sans locuteur natif : signalez erreurs et suggestions sur {issues_url}.",
+        "description": "Affiche les pannes d'internet et les câbles sous-marins sur la carte Live Track. Câbles : chaque câble sous-marin et chaque point d'atterrissement du jeu de données de Tristan Hotham tiré des données de câbles de TeleGeography (CC BY-NC-SA 4.0), fourni avec Live Track Internet, chaque couche avec sa propre case sur la carte, décochée tant que vous ne la cochez pas. Pannes : les fiches de panne de Cloudflare Radar, un marqueur pour chaque panne en cours, placé dans le pays ou la région qu'elle indique, et en rouge tout câble qu'une panne nomme. Pour les pannes, il vous faut votre propre jeton d'API Cloudflare, gratuit. Créez-le sur {token_url} : choisissez un jeton personnalisé (« Custom token ») et donnez-lui l'autorisation Account > Radar > Read. Home Assistant s'en sert pour demander la liste des pannes à Cloudflare toutes les 15 minutes. Laissez le jeton vide pour n'afficher que les câbles ; vous pourrez en ajouter un plus tard. Les données de Cloudflare Radar sont sous licence CC BY-NC 4.0 ; les deux sources sont pour un usage non commercial. Cette traduction a été écrite sans locuteur natif : signalez erreurs et suggestions sur {issues_url}.",
         "data": {
           "api_token": "Jeton d'API Cloudflare"
         },
         "data_description": {
-          "api_token": "Conservé dans Home Assistant et envoyé uniquement à Cloudflare."
+          "api_token": "Facultatif : sans lui, les câbles seuls. Conservé dans Home Assistant et envoyé uniquement à Cloudflare."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "Changer le jeton d'API Cloudflare",
-        "description": "Saisissez un autre jeton d'API Cloudflare (un jeton personnalisé avec Account > Radar > Read, créé sur {token_url}).",
+        "description": "Saisissez un jeton d'API Cloudflare (un jeton personnalisé avec Account > Radar > Read, créé sur {token_url}). Laissez le champ vide pour garder le jeton actuel. Pour retirer le jeton, supprimez Live Track Internet et ajoutez-le de nouveau sans jeton.",
         "data": {
           "api_token": "Jeton d'API Cloudflare"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet est déjà configuré.",
       "single_instance_allowed": "Live Track Internet est déjà configuré.",
       "reauth_successful": "Le nouveau jeton fonctionne. Les marqueurs de panne sont de retour.",
-      "reconfigure_successful": "Le nouveau jeton fonctionne."
+      "reconfigure_successful": "Enregistré."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "Pannes d'internet"
+      },
+      "all_cables": {
+        "name": "Tous les câbles"
+      },
+      "cables_in_trouble": {
+        "name": "Câbles touchés"
+      },
+      "landing_points": {
+        "name": "Points d'atterrissement"
       }
     }
   }

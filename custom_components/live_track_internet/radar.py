@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
+from collections.abc import Callable
 from typing import Any
 
 from .const import (ATTRIBUTION, BACKOFF_S, CAUSE_CLASS, CAUSE_WORDS, CLASSES, RATE_LIMIT_MAX_S, TYPE_WORDS)
@@ -184,10 +185,13 @@ def _https(url: Any) -> str | None:
 
 
 def build_markers(records: list[dict[str, Any]], countries: dict[str, dict[str, Any]],
-                  regions: dict[str, dict[str, Any] | None], icon_base: str
+                  regions: dict[str, dict[str, Any] | None], icon_base: str,
+                  name_cables: Callable[[str], list[str]] | None = None,
                   ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """(markers, not_on_map). `records` are OPEN records; `icon_base` is the served icons path with no slash at the
-    end. A record that cannot be placed (PLATFORM, or no country point known) goes to not_on_map."""
+    end. A record that cannot be placed (PLATFORM, or no country point known) goes to not_on_map. `name_cables`, when
+    given, returns the cable ids a description names; a marker then carries them as `cables_named` (SSOT 5.3), which
+    drives "cables in trouble"."""
     markers: list[dict[str, Any]] = []
     not_on_map: list[dict[str, Any]] = []
     for rec in records:
@@ -200,6 +204,7 @@ def build_markers(records: list[dict[str, Any]], countries: dict[str, dict[str, 
         where = places(rec, countries, regions)
         desc = (rec.get("description") or "").strip()
         link = _https(rec.get("linkedUrl"))
+        named = name_cables(desc) if (name_cables and desc) else []
         if not where:
             item = {"id": rid, "cause": cause or "UNKNOWN"}
             if otype:
@@ -261,6 +266,8 @@ def build_markers(records: list[dict[str, Any]], countries: dict[str, dict[str, 
             if link:
                 attrs["linked_url"] = link
                 attrs["marker_links"] = [{"label": "Report", "url": link}]
+            if named:
+                attrs["cables_named"] = list(named)
             markers.append({"key": key, "name": name, "lat": round(p["lat"], 5), "lon": round(p["lon"], 5),
                             "attrs": attrs})
     return markers, not_on_map

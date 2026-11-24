@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Zet internetstoringen op de Live Track-kaart: de storingsmeldingen van Cloudflare Radar, één markering per lopende storing, geplaatst in het land of de regio die erin wordt genoemd. Je hebt je eigen gratis Cloudflare-API-token nodig. Maak er een aan op {token_url}: kies een aangepast token ('Custom token') en geef het de machtiging Account > Radar > Read. Home Assistant vraagt daarmee elke 15 minuten de storingslijst op bij Cloudflare. De gegevens van Cloudflare Radar vallen onder de licentie CC BY-NC 4.0, voor niet-commercieel gebruik. Deze vertaling is geschreven zonder moedertaalspreker: meld fouten en suggesties op {issues_url}.",
+        "description": "Zet internetstoringen en onderzeese kabels op de Live Track-kaart. Kabels: elke onderzeese kabel en elk aanlandingspunt uit de dataset van Tristan Hotham met de kabelgegevens van TeleGeography (CC BY-NC-SA 4.0), meegeleverd met Live Track Internet, elke laag met een eigen vakje op de kaart, uit tot je het aanvinkt. Storingen: de storingsmeldingen van Cloudflare Radar, één markering per lopende storing, geplaatst in het land of de regio die erin wordt genoemd, en in rood elke kabel die een storing noemt. Voor de storingen heb je je eigen gratis Cloudflare-API-token nodig. Maak er een aan op {token_url}: kies een aangepast token ('Custom token') en geef het de machtiging Account > Radar > Read. Home Assistant vraagt daarmee elke 15 minuten de storingslijst op bij Cloudflare. Laat het token leeg om alleen de kabels te tonen; je kunt er later een toevoegen. De gegevens van Cloudflare Radar vallen onder de licentie CC BY-NC 4.0; beide bronnen zijn voor niet-commercieel gebruik. Deze vertaling is geschreven zonder moedertaalspreker: meld fouten en suggesties op {issues_url}.",
         "data": {
           "api_token": "Cloudflare-API-token"
         },
         "data_description": {
-          "api_token": "Wordt bewaard in Home Assistant en alleen naar Cloudflare gestuurd."
+          "api_token": "Optioneel: zonder token alleen de kabels. Wordt bewaard in Home Assistant en alleen naar Cloudflare gestuurd."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "Cloudflare-API-token wijzigen",
-        "description": "Vul een ander Cloudflare-API-token in (een aangepast token met Account > Radar > Read, aangemaakt op {token_url}).",
+        "description": "Vul een Cloudflare-API-token in (een aangepast token met Account > Radar > Read, aangemaakt op {token_url}). Laat het veld leeg om het huidige token te houden. Om het token te verwijderen, verwijder je Live Track Internet en voeg je het opnieuw toe zonder token.",
         "data": {
           "api_token": "Cloudflare-API-token"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet is al ingesteld.",
       "single_instance_allowed": "Live Track Internet is al ingesteld.",
       "reauth_successful": "Het nieuwe token werkt. De storingsmarkeringen zijn terug.",
-      "reconfigure_successful": "Het nieuwe token werkt."
+      "reconfigure_successful": "Opgeslagen."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "Internetstoringen"
+      },
+      "all_cables": {
+        "name": "Alle kabels"
+      },
+      "cables_in_trouble": {
+        "name": "Kabels met storing"
+      },
+      "landing_points": {
+        "name": "Aanlandingspunten"
       }
     }
   }

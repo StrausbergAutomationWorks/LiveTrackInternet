@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Показує збої інтернету на карті Live Track: записи про збої з Cloudflare Radar, по одному маркеру на кожен поточний збій, розміщеному в країні або регіоні, які в ньому названо. Потрібен власний безкоштовний токен API Cloudflare. Створіть його на {token_url}: виберіть Custom token (власний токен) і надайте йому дозвіл Account > Radar > Read. З ним Home Assistant запитує в Cloudflare список збоїв кожні 15 хвилин. Дані Cloudflare Radar поширюються за ліцензією CC BY-NC 4.0, лише для некомерційного використання. Цей переклад написано без носія мови: повідомляйте про помилки та пропозиції на {issues_url}.",
+        "description": "Показує збої інтернету та підводні кабелі на карті Live Track. Кабелі: кожен підводний кабель і кожна точка виходу на берег із набору даних Трістана Готема (Tristan Hotham) за даними про кабелі TeleGeography (CC BY-NC-SA 4.0), що постачається з Live Track Internet; кожен шар має власний прапорець на карті й вимкнений, доки ви його не позначите. Збої: записи про збої з Cloudflare Radar, по одному маркеру на кожен поточний збій, розміщеному в країні або регіоні, які в ньому названо, а кожен кабель, названий у збої, позначено червоним. Для збоїв потрібен власний безкоштовний токен API Cloudflare. Створіть його на {token_url}: виберіть Custom token (власний токен) і надайте йому дозвіл Account > Radar > Read. З ним Home Assistant запитує в Cloudflare список збоїв кожні 15 хвилин. Залиште токен порожнім, щоб показувати лише кабелі; токен можна додати пізніше. Дані Cloudflare Radar поширюються за ліцензією CC BY-NC 4.0; обидва джерела лише для некомерційного використання. Цей переклад написано без носія мови: повідомляйте про помилки та пропозиції на {issues_url}.",
         "data": {
           "api_token": "Токен API Cloudflare"
         },
         "data_description": {
-          "api_token": "Зберігається в Home Assistant і надсилається лише до Cloudflare."
+          "api_token": "Необов’язково: без нього лише кабелі. Зберігається в Home Assistant і надсилається лише до Cloudflare."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "Змінити токен API Cloudflare",
-        "description": "Введіть інший токен API Cloudflare (Custom token з дозволом Account > Radar > Read, створений на {token_url}).",
+        "description": "Введіть токен API Cloudflare (Custom token з дозволом Account > Radar > Read, створений на {token_url}). Залиште поле порожнім, щоб зберегти поточний токен. Щоб прибрати токен, видаліть Live Track Internet і додайте його знову без токена.",
         "data": {
           "api_token": "Токен API Cloudflare"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet уже налаштовано.",
       "single_instance_allowed": "Live Track Internet уже налаштовано.",
       "reauth_successful": "Новий токен працює. Маркери збоїв повернулися.",
-      "reconfigure_successful": "Новий токен працює."
+      "reconfigure_successful": "Збережено."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "Збої інтернету"
+      },
+      "all_cables": {
+        "name": "Усі кабелі"
+      },
+      "cables_in_trouble": {
+        "name": "Кабелі зі збоями"
+      },
+      "landing_points": {
+        "name": "Точки виходу кабелів"
       }
     }
   }

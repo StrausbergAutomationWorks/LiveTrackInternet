@@ -4,7 +4,7 @@ from __future__ import annotations
 
 DOMAIN = "live_track_internet"
 NAME = "Live Track Internet"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 CONF_API_TOKEN = "api_token"
 

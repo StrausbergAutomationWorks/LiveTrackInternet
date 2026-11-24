@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "يعرض انقطاعات الإنترنت على خريطة Live Track: سجلات الانقطاع من Cloudflare Radar، علامة واحدة لكل انقطاع قائم، توضع في البلد أو المنطقة التي يذكرها السجل. تحتاج إلى رمز API مجاني خاص بك من Cloudflare. أنشئه من {token_url}: اختر Custom token (رمز مخصص) وامنحه الإذن Account > Radar > Read. يطلب Home Assistant به قائمة الانقطاعات من Cloudflare كل 15 دقيقة. بيانات Cloudflare Radar مرخّصة بموجب CC BY-NC 4.0، للاستخدام غير التجاري فقط. كُتبت هذه الترجمة دون متحدث أصلي باللغة: يُرجى الإبلاغ عن الأخطاء والاقتراحات على {issues_url}.",
+        "description": "يعرض انقطاعات الإنترنت والكابلات البحرية على خريطة Live Track. الكابلات: كل كابل بحري وكل نقطة إنزال من مجموعة بيانات تريستان هوثام (Tristan Hotham) المأخوذة من بيانات الكابلات لدى TeleGeography (CC BY-NC-SA 4.0)، المرفقة مع Live Track Internet، ولكل طبقة مربع خاص بها على الخريطة يبقى غير محدد حتى تحدده. الانقطاعات: سجلات الانقطاع من Cloudflare Radar، علامة واحدة لكل انقطاع قائم، توضع في البلد أو المنطقة التي يذكرها السجل، ويُرسم باللون الأحمر كل كابل يذكره انقطاع. تحتاج للانقطاعات إلى رمز API مجاني خاص بك من Cloudflare. أنشئه من {token_url}: اختر Custom token (رمز مخصص) وامنحه الإذن Account > Radar > Read. يطلب Home Assistant به قائمة الانقطاعات من Cloudflare كل 15 دقيقة. اترك الرمز فارغًا لعرض الكابلات وحدها؛ يمكنك إضافة رمز لاحقًا. بيانات Cloudflare Radar مرخّصة بموجب CC BY-NC 4.0، والمصدران كلاهما للاستخدام غير التجاري فقط. كُتبت هذه الترجمة دون متحدث أصلي باللغة: يُرجى الإبلاغ عن الأخطاء والاقتراحات على {issues_url}.",
         "data": {
           "api_token": "رمز API من Cloudflare"
         },
         "data_description": {
-          "api_token": "يُحفظ في Home Assistant ولا يُرسل إلا إلى Cloudflare."
+          "api_token": "اختياري: بدونه تُعرض الكابلات وحدها. يُحفظ في Home Assistant ولا يُرسل إلا إلى Cloudflare."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "تغيير رمز API من Cloudflare",
-        "description": "أدخل رمز API آخر من Cloudflare (Custom token بالإذن Account > Radar > Read، يُنشأ من {token_url}).",
+        "description": "أدخل رمز API من Cloudflare (Custom token بالإذن Account > Radar > Read، يُنشأ من {token_url}). اترك الحقل فارغًا للإبقاء على الرمز الحالي. لإزالة الرمز، احذف Live Track Internet ثم أضفه من جديد بدون رمز.",
         "data": {
           "api_token": "رمز API من Cloudflare"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet مُعدّ بالفعل.",
       "single_instance_allowed": "Live Track Internet مُعدّ بالفعل.",
       "reauth_successful": "الرمز الجديد يعمل. عادت علامات الانقطاع.",
-      "reconfigure_successful": "الرمز الجديد يعمل."
+      "reconfigure_successful": "تم الحفظ."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "انقطاعات الإنترنت"
+      },
+      "all_cables": {
+        "name": "كل الكابلات"
+      },
+      "cables_in_trouble": {
+        "name": "كابلات متأثرة"
+      },
+      "landing_points": {
+        "name": "نقاط الإنزال"
       }
     }
   }

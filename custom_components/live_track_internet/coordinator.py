@@ -16,6 +16,7 @@ import json
 import logging
 import os
 import time
+from collections.abc import Callable
 from datetime import timedelta
 from typing import Any
 
@@ -50,12 +51,14 @@ def _write_json(path: str, doc: Any) -> None:
 
 
 class OutageCoordinator(DataUpdateCoordinator[dict[str, Any]]):
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, icon_base: str) -> None:
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, icon_base: str,
+                 name_cables: Callable[[str], list[str]] | None = None) -> None:
         super().__init__(hass, _LOGGER, config_entry=entry, name=f"{DOMAIN}_outages",
                          update_interval=timedelta(seconds=POLL_S))
         self._session = async_get_clientsession(hass)
         self._token: str = entry.data.get(CONF_API_TOKEN, "")
         self._icon_base = icon_base
+        self._name_cables = name_cables
         self._countries: dict[str, dict[str, Any]] = {}
         self._countries_at = 0.0
         self._regions: dict[str, dict[str, Any] | None] = {}
@@ -149,7 +152,8 @@ class OutageCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                                 radar.backoff_s(self._failures + 1))
         records = radar.open_records(ans.data)
         await self._refresh_regions(records)
-        markers, not_on_map = radar.build_markers(records, self._countries, self._regions, self._icon_base)
+        markers, not_on_map = radar.build_markers(records, self._countries, self._regions, self._icon_base,
+                                                  self._name_cables)
         self._failures = 0
         self.update_interval = timedelta(seconds=POLL_S)
         self.reason = None

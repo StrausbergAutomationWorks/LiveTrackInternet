@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Zeigt Internetausfälle auf der Live-Track-Karte: die Ausfallmeldungen von Cloudflare Radar, ein Marker für jeden laufenden Ausfall, platziert in dem Land oder der Region, die er nennt. Sie brauchen Ihr eigenes kostenloses Cloudflare-API-Token. Erstellen Sie es unter {token_url}: Wählen Sie ein benutzerdefiniertes Token („Custom token“) und geben Sie ihm die Berechtigung Account > Radar > Read. Home Assistant fragt damit alle 15 Minuten die Ausfallliste bei Cloudflare ab. Die Daten von Cloudflare Radar stehen unter der Lizenz CC BY-NC 4.0, nur für nicht kommerzielle Nutzung. Diese Übersetzung wurde ohne Muttersprachler geschrieben: Fehler und Vorschläge bitte unter {issues_url} melden.",
+        "description": "Zeigt Internetausfälle und Seekabel auf der Live-Track-Karte. Kabel: jedes Seekabel und jeder Anlandepunkt aus Tristan Hothams Datensatz der Kabeldaten von TeleGeography (CC BY-NC-SA 4.0), mit Live Track Internet ausgeliefert, jede Ebene mit eigenem Kästchen auf der Karte, aus, bis Sie es anhaken. Ausfälle: die Ausfallmeldungen von Cloudflare Radar, ein Marker für jeden laufenden Ausfall, platziert in dem Land oder der Region, die er nennt, und jedes Kabel, das ein Ausfall nennt, rot gezeichnet. Für die Ausfälle brauchen Sie Ihr eigenes kostenloses Cloudflare-API-Token. Erstellen Sie es unter {token_url}: Wählen Sie ein benutzerdefiniertes Token („Custom token“) und geben Sie ihm die Berechtigung Account > Radar > Read. Home Assistant fragt damit alle 15 Minuten die Ausfallliste bei Cloudflare ab. Lassen Sie das Token leer, um nur die Kabel zu zeigen; Sie können später eines hinzufügen. Die Daten von Cloudflare Radar stehen unter der Lizenz CC BY-NC 4.0; beide Quellen sind nur für nicht kommerzielle Nutzung. Diese Übersetzung wurde ohne Muttersprachler geschrieben: Fehler und Vorschläge bitte unter {issues_url} melden.",
         "data": {
           "api_token": "Cloudflare-API-Token"
         },
         "data_description": {
-          "api_token": "Wird in Home Assistant gespeichert und nur an Cloudflare gesendet."
+          "api_token": "Optional: ohne Token nur die Kabel. Wird in Home Assistant gespeichert und nur an Cloudflare gesendet."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "Cloudflare-API-Token ändern",
-        "description": "Geben Sie ein anderes Cloudflare-API-Token ein (ein benutzerdefiniertes Token mit Account > Radar > Read, erstellt unter {token_url}).",
+        "description": "Geben Sie ein Cloudflare-API-Token ein (ein benutzerdefiniertes Token mit Account > Radar > Read, erstellt unter {token_url}). Lassen Sie das Feld leer, um das jetzige Token zu behalten. Um das Token zu entfernen, löschen Sie Live Track Internet und fügen Sie es ohne Token wieder hinzu.",
         "data": {
           "api_token": "Cloudflare-API-Token"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet ist bereits eingerichtet.",
       "single_instance_allowed": "Live Track Internet ist bereits eingerichtet.",
       "reauth_successful": "Das neue Token funktioniert. Die Ausfallmarker sind wieder da.",
-      "reconfigure_successful": "Das neue Token funktioniert."
+      "reconfigure_successful": "Gespeichert."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "Internetausfälle"
+      },
+      "all_cables": {
+        "name": "Alle Kabel"
+      },
+      "cables_in_trouble": {
+        "name": "Kabel mit Störung"
+      },
+      "landing_points": {
+        "name": "Anlandepunkte"
       }
     }
   }

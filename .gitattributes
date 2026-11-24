@@ -3,3 +3,6 @@
 # core.autocrlf=true git would otherwise rewrite them to LF on commit, and the
 # repository (and HACS) would ship a file that is not the release. Backlog 291.
 custom_components/*/frontend/** -text -diff
+# The cable data ships gzipped, byte for byte as tools/build_cables.py wrote it (its digest is in
+# the served URL), so git must never touch its bytes.
+custom_components/*/cables/**/*.gz -text -diff

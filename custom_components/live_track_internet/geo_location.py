@@ -22,7 +22,9 @@ from .coordinator import OutageCoordinator
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
-    coordinator: OutageCoordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: OutageCoordinator | None = hass.data[DOMAIN][entry.entry_id]
+    if coordinator is None:
+        return  # no Cloudflare token: the cable layers alone (SSOT section 2)
     manager = _Outages(hass, coordinator, async_add_entities)
     entry.async_on_unload(coordinator.async_add_listener(manager.update))
     entry.async_on_unload(manager.remove_all)

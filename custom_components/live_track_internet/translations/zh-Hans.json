@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "在 Live Track 地图上显示互联网中断：来自 Cloudflare Radar 的中断记录，每个尚未结束的中断一个标记，放在记录所指的国家或地区。你需要自己的免费 Cloudflare API 令牌。请在 {token_url} 创建：选择 Custom token（自定义令牌），并授予 Account > Radar > Read 权限。Home Assistant 每 15 分钟用它向 Cloudflare 获取一次中断列表。Cloudflare Radar 的数据采用 CC BY-NC 4.0 许可，仅限非商业用途。本翻译并非由母语人士撰写：如有错误或建议，请在 {issues_url} 告诉我们。",
+        "description": "在 Live Track 地图上显示互联网中断和海底电缆。电缆：Tristan Hotham 根据 TeleGeography 电缆数据整理的数据集（CC BY-NC-SA 4.0）中的每条海底电缆和每个登陆点，随 Live Track Internet 一起提供；每个图层在地图上都有自己的复选框，勾选前不显示。中断：来自 Cloudflare Radar 的中断记录，每个尚未结束的中断一个标记，放在记录所指的国家或地区，中断记录提到的电缆以红色绘出。显示中断需要你自己的免费 Cloudflare API 令牌。请在 {token_url} 创建：选择 Custom token（自定义令牌），并授予 Account > Radar > Read 权限。Home Assistant 每 15 分钟用它向 Cloudflare 获取一次中断列表。令牌留空则只显示电缆；以后可以再添加。Cloudflare Radar 的数据采用 CC BY-NC 4.0 许可；两个来源都仅限非商业用途。本翻译并非由母语人士撰写：如有错误或建议，请在 {issues_url} 告诉我们。",
         "data": {
           "api_token": "Cloudflare API 令牌"
         },
         "data_description": {
-          "api_token": "保存在 Home Assistant 中，只发送给 Cloudflare。"
+          "api_token": "可选：不填则只显示电缆。保存在 Home Assistant 中，只发送给 Cloudflare。"
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "更改 Cloudflare API 令牌",
-        "description": "输入另一个 Cloudflare API 令牌（在 {token_url} 创建、具有 Account > Radar > Read 权限的 Custom token）。",
+        "description": "输入 Cloudflare API 令牌（在 {token_url} 创建、具有 Account > Radar > Read 权限的 Custom token）。留空则保留当前令牌。要删除令牌，请删除 Live Track Internet，然后不填令牌重新添加。",
         "data": {
           "api_token": "Cloudflare API 令牌"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet 已经设置好了。",
       "single_instance_allowed": "Live Track Internet 已经设置好了。",
       "reauth_successful": "新令牌可用。中断标记已恢复。",
-      "reconfigure_successful": "新令牌可用。"
+      "reconfigure_successful": "已保存。"
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "互联网中断"
+      },
+      "all_cables": {
+        "name": "全部电缆"
+      },
+      "cables_in_trouble": {
+        "name": "受影响的电缆"
+      },
+      "landing_points": {
+        "name": "登陆点"
       }
     }
   }

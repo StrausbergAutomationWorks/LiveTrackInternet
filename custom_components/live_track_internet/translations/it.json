@@ -3,12 +3,12 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Mostra le interruzioni di internet sulla mappa di Live Track: le schede delle interruzioni di Cloudflare Radar, un indicatore per ogni interruzione in corso, posto nel paese o nella regione che indica. Ti serve un tuo token API di Cloudflare, gratuito. Crealo su {token_url}: scegli un token personalizzato («Custom token») e dagli il permesso Account > Radar > Read. Con esso Home Assistant chiede a Cloudflare l'elenco delle interruzioni ogni 15 minuti. I dati di Cloudflare Radar sono distribuiti con licenza CC BY-NC 4.0, per uso non commerciale. Questa traduzione è stata scritta senza un madrelingua: segnalaci errori e suggerimenti su {issues_url}.",
+        "description": "Mostra le interruzioni di internet e i cavi sottomarini sulla mappa di Live Track. Cavi: ogni cavo sottomarino e ogni punto di approdo del set di dati di Tristan Hotham sui dati dei cavi di TeleGeography (CC BY-NC-SA 4.0), fornito con Live Track Internet, ogni livello con la sua casella sulla mappa, spento finché non la spunti. Interruzioni: le schede delle interruzioni di Cloudflare Radar, un indicatore per ogni interruzione in corso, posto nel paese o nella regione che indica, e in rosso ogni cavo nominato da un'interruzione. Per le interruzioni ti serve un tuo token API di Cloudflare, gratuito. Crealo su {token_url}: scegli un token personalizzato («Custom token») e dagli il permesso Account > Radar > Read. Con esso Home Assistant chiede a Cloudflare l'elenco delle interruzioni ogni 15 minuti. Lascia vuoto il token per mostrare solo i cavi; potrai aggiungerne uno in seguito. I dati di Cloudflare Radar sono distribuiti con licenza CC BY-NC 4.0; entrambe le fonti sono per uso non commerciale. Questa traduzione è stata scritta senza un madrelingua: segnalaci errori e suggerimenti su {issues_url}.",
         "data": {
           "api_token": "Token API di Cloudflare"
         },
         "data_description": {
-          "api_token": "Conservato in Home Assistant e inviato solo a Cloudflare."
+          "api_token": "Facoltativo: senza, solo i cavi. Conservato in Home Assistant e inviato solo a Cloudflare."
         }
       },
       "reauth_confirm": {
@@ -20,7 +20,7 @@
       },
       "reconfigure": {
         "title": "Cambia il token API di Cloudflare",
-        "description": "Inserisci un altro token API di Cloudflare (un token personalizzato con Account > Radar > Read, creato su {token_url}).",
+        "description": "Inserisci un token API di Cloudflare (un token personalizzato con Account > Radar > Read, creato su {token_url}). Lascia vuoto il campo per tenere il token attuale. Per togliere il token, elimina Live Track Internet e aggiungilo di nuovo senza token.",
         "data": {
           "api_token": "Token API di Cloudflare"
         }
@@ -35,13 +35,22 @@
       "already_configured": "Live Track Internet è già configurato.",
       "single_instance_allowed": "Live Track Internet è già configurato.",
       "reauth_successful": "Il nuovo token funziona. Gli indicatori delle interruzioni sono tornati.",
-      "reconfigure_successful": "Il nuovo token funziona."
+      "reconfigure_successful": "Salvato."
     }
   },
   "entity": {
     "sensor": {
       "outages": {
         "name": "Interruzioni di internet"
+      },
+      "all_cables": {
+        "name": "Tutti i cavi"
+      },
+      "cables_in_trouble": {
+        "name": "Cavi con problemi"
+      },
+      "landing_points": {
+        "name": "Punti di approdo"
       }
     }
   }
