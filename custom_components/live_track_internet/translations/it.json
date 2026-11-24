@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Mostra le interruzioni di internet sulla mappa di Live Track: le schede delle interruzioni di Cloudflare Radar, un indicatore per ogni interruzione in corso, posto nel paese o nella regione che indica. Ti serve un tuo token API di Cloudflare, gratuito. Crealo su {token_url}: scegli un token personalizzato («Custom token») e dagli il permesso Account > Radar > Read. Con esso Home Assistant chiede a Cloudflare l'elenco delle interruzioni ogni 15 minuti. I dati di Cloudflare Radar sono distribuiti con licenza CC BY-NC 4.0, per uso non commerciale. Questa traduzione è stata scritta senza un madrelingua: segnalaci errori e suggerimenti su {issues_url}.",
+        "data": {
+          "api_token": "Token API di Cloudflare"
+        },
+        "data_description": {
+          "api_token": "Conservato in Home Assistant e inviato solo a Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Nuovo token API di Cloudflare",
+        "description": "Cloudflare ha rifiutato il token API, quindi gli indicatori delle interruzioni sono spenti. Creane uno nuovo su {token_url} (un token personalizzato con Account > Radar > Read) e inseriscilo qui.",
+        "data": {
+          "api_token": "Token API di Cloudflare"
+        }
+      },
+      "reconfigure": {
+        "title": "Cambia il token API di Cloudflare",
+        "description": "Inserisci un altro token API di Cloudflare (un token personalizzato con Account > Radar > Read, creato su {token_url}).",
+        "data": {
+          "api_token": "Token API di Cloudflare"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare ha rifiutato questo token. Controlla che abbia Account > Radar > Read e che non sia scaduto.",
+      "cannot_connect": "Impossibile raggiungere Cloudflare. Riprova tra qualche minuto.",
+      "unknown": "Cloudflare ha dato una risposta che Live Track Internet non si aspettava. Riprova e segnalalo se si ripete."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet è già configurato.",
+      "single_instance_allowed": "Live Track Internet è già configurato.",
+      "reauth_successful": "Il nuovo token funziona. Gli indicatori delle interruzioni sono tornati.",
+      "reconfigure_successful": "Il nuovo token funziona."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Interruzioni di internet"
+      }
+    }
+  }
+}

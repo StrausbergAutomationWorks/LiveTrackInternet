@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Показує збої інтернету на карті Live Track: записи про збої з Cloudflare Radar, по одному маркеру на кожен поточний збій, розміщеному в країні або регіоні, які в ньому названо. Потрібен власний безкоштовний токен API Cloudflare. Створіть його на {token_url}: виберіть Custom token (власний токен) і надайте йому дозвіл Account > Radar > Read. З ним Home Assistant запитує в Cloudflare список збоїв кожні 15 хвилин. Дані Cloudflare Radar поширюються за ліцензією CC BY-NC 4.0, лише для некомерційного використання. Цей переклад написано без носія мови: повідомляйте про помилки та пропозиції на {issues_url}.",
+        "data": {
+          "api_token": "Токен API Cloudflare"
+        },
+        "data_description": {
+          "api_token": "Зберігається в Home Assistant і надсилається лише до Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Новий токен API Cloudflare",
+        "description": "Cloudflare відхилив токен API, тому маркери збоїв вимкнено. Створіть новий на {token_url} (Custom token з дозволом Account > Radar > Read) і введіть його тут.",
+        "data": {
+          "api_token": "Токен API Cloudflare"
+        }
+      },
+      "reconfigure": {
+        "title": "Змінити токен API Cloudflare",
+        "description": "Введіть інший токен API Cloudflare (Custom token з дозволом Account > Radar > Read, створений на {token_url}).",
+        "data": {
+          "api_token": "Токен API Cloudflare"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare відхилив цей токен. Перевірте, чи має він дозвіл Account > Radar > Read і чи не минув термін його дії.",
+      "cannot_connect": "Не вдалося зв’язатися з Cloudflare. Спробуйте ще раз за кілька хвилин.",
+      "unknown": "Cloudflare надіслав відповідь, якої Live Track Internet не очікував. Спробуйте ще раз і повідомте, якщо це повториться."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet уже налаштовано.",
+      "single_instance_allowed": "Live Track Internet уже налаштовано.",
+      "reauth_successful": "Новий токен працює. Маркери збоїв повернулися.",
+      "reconfigure_successful": "Новий токен працює."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Збої інтернету"
+      }
+    }
+  }
+}

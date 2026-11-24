@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Affiche les pannes d'internet sur la carte Live Track : les fiches de panne de Cloudflare Radar, un marqueur pour chaque panne en cours, placé dans le pays ou la région qu'elle indique. Il vous faut votre propre jeton d'API Cloudflare, gratuit. Créez-le sur {token_url} : choisissez un jeton personnalisé (« Custom token ») et donnez-lui l'autorisation Account > Radar > Read. Home Assistant s'en sert pour demander la liste des pannes à Cloudflare toutes les 15 minutes. Les données de Cloudflare Radar sont sous licence CC BY-NC 4.0, pour un usage non commercial. Cette traduction a été écrite sans locuteur natif : signalez erreurs et suggestions sur {issues_url}.",
+        "data": {
+          "api_token": "Jeton d'API Cloudflare"
+        },
+        "data_description": {
+          "api_token": "Conservé dans Home Assistant et envoyé uniquement à Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Nouveau jeton d'API Cloudflare",
+        "description": "Cloudflare a refusé le jeton d'API, les marqueurs de panne sont donc désactivés. Créez-en un nouveau sur {token_url} (un jeton personnalisé avec Account > Radar > Read) et saisissez-le ici.",
+        "data": {
+          "api_token": "Jeton d'API Cloudflare"
+        }
+      },
+      "reconfigure": {
+        "title": "Changer le jeton d'API Cloudflare",
+        "description": "Saisissez un autre jeton d'API Cloudflare (un jeton personnalisé avec Account > Radar > Read, créé sur {token_url}).",
+        "data": {
+          "api_token": "Jeton d'API Cloudflare"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare a refusé ce jeton. Vérifiez qu'il a l'autorisation Account > Radar > Read et qu'il n'a pas expiré.",
+      "cannot_connect": "Impossible de joindre Cloudflare. Réessayez dans quelques minutes.",
+      "unknown": "Cloudflare a donné une réponse que Live Track Internet n'attendait pas. Réessayez, et signalez-le si cela se reproduit."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet est déjà configuré.",
+      "single_instance_allowed": "Live Track Internet est déjà configuré.",
+      "reauth_successful": "Le nouveau jeton fonctionne. Les marqueurs de panne sont de retour.",
+      "reconfigure_successful": "Le nouveau jeton fonctionne."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Pannes d'internet"
+      }
+    }
+  }
+}

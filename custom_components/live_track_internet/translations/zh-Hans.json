@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "在 Live Track 地图上显示互联网中断：来自 Cloudflare Radar 的中断记录，每个尚未结束的中断一个标记，放在记录所指的国家或地区。你需要自己的免费 Cloudflare API 令牌。请在 {token_url} 创建：选择 Custom token（自定义令牌），并授予 Account > Radar > Read 权限。Home Assistant 每 15 分钟用它向 Cloudflare 获取一次中断列表。Cloudflare Radar 的数据采用 CC BY-NC 4.0 许可，仅限非商业用途。本翻译并非由母语人士撰写：如有错误或建议，请在 {issues_url} 告诉我们。",
+        "data": {
+          "api_token": "Cloudflare API 令牌"
+        },
+        "data_description": {
+          "api_token": "保存在 Home Assistant 中，只发送给 Cloudflare。"
+        }
+      },
+      "reauth_confirm": {
+        "title": "新的 Cloudflare API 令牌",
+        "description": "Cloudflare 拒绝了 API 令牌，因此中断标记已关闭。请在 {token_url} 创建一个新令牌（具有 Account > Radar > Read 权限的 Custom token），并在此输入。",
+        "data": {
+          "api_token": "Cloudflare API 令牌"
+        }
+      },
+      "reconfigure": {
+        "title": "更改 Cloudflare API 令牌",
+        "description": "输入另一个 Cloudflare API 令牌（在 {token_url} 创建、具有 Account > Radar > Read 权限的 Custom token）。",
+        "data": {
+          "api_token": "Cloudflare API 令牌"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare 拒绝了此令牌。请检查它是否具有 Account > Radar > Read 权限且未过期。",
+      "cannot_connect": "无法连接到 Cloudflare。请几分钟后再试。",
+      "unknown": "Cloudflare 返回了 Live Track Internet 未预料到的应答。请重试；如果反复出现，请报告。"
+    },
+    "abort": {
+      "already_configured": "Live Track Internet 已经设置好了。",
+      "single_instance_allowed": "Live Track Internet 已经设置好了。",
+      "reauth_successful": "新令牌可用。中断标记已恢复。",
+      "reconfigure_successful": "新令牌可用。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "互联网中断"
+      }
+    }
+  }
+}

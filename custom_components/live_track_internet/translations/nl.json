@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Zet internetstoringen op de Live Track-kaart: de storingsmeldingen van Cloudflare Radar, één markering per lopende storing, geplaatst in het land of de regio die erin wordt genoemd. Je hebt je eigen gratis Cloudflare-API-token nodig. Maak er een aan op {token_url}: kies een aangepast token ('Custom token') en geef het de machtiging Account > Radar > Read. Home Assistant vraagt daarmee elke 15 minuten de storingslijst op bij Cloudflare. De gegevens van Cloudflare Radar vallen onder de licentie CC BY-NC 4.0, voor niet-commercieel gebruik. Deze vertaling is geschreven zonder moedertaalspreker: meld fouten en suggesties op {issues_url}.",
+        "data": {
+          "api_token": "Cloudflare-API-token"
+        },
+        "data_description": {
+          "api_token": "Wordt bewaard in Home Assistant en alleen naar Cloudflare gestuurd."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Nieuw Cloudflare-API-token",
+        "description": "Cloudflare heeft het API-token geweigerd, dus de storingsmarkeringen staan uit. Maak een nieuw token aan op {token_url} (een aangepast token met Account > Radar > Read) en vul het hier in.",
+        "data": {
+          "api_token": "Cloudflare-API-token"
+        }
+      },
+      "reconfigure": {
+        "title": "Cloudflare-API-token wijzigen",
+        "description": "Vul een ander Cloudflare-API-token in (een aangepast token met Account > Radar > Read, aangemaakt op {token_url}).",
+        "data": {
+          "api_token": "Cloudflare-API-token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare heeft dit token geweigerd. Controleer of het Account > Radar > Read heeft en niet verlopen is.",
+      "cannot_connect": "Cloudflare was niet bereikbaar. Probeer het over een paar minuten opnieuw.",
+      "unknown": "Cloudflare gaf een antwoord dat Live Track Internet niet verwachtte. Probeer het opnieuw en meld het als het vaker gebeurt."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet is al ingesteld.",
+      "single_instance_allowed": "Live Track Internet is al ingesteld.",
+      "reauth_successful": "Het nieuwe token werkt. De storingsmarkeringen zijn terug.",
+      "reconfigure_successful": "Het nieuwe token werkt."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Internetstoringen"
+      }
+    }
+  }
+}

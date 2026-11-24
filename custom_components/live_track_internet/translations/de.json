@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Zeigt Internetausfälle auf der Live-Track-Karte: die Ausfallmeldungen von Cloudflare Radar, ein Marker für jeden laufenden Ausfall, platziert in dem Land oder der Region, die er nennt. Sie brauchen Ihr eigenes kostenloses Cloudflare-API-Token. Erstellen Sie es unter {token_url}: Wählen Sie ein benutzerdefiniertes Token („Custom token“) und geben Sie ihm die Berechtigung Account > Radar > Read. Home Assistant fragt damit alle 15 Minuten die Ausfallliste bei Cloudflare ab. Die Daten von Cloudflare Radar stehen unter der Lizenz CC BY-NC 4.0, nur für nicht kommerzielle Nutzung. Diese Übersetzung wurde ohne Muttersprachler geschrieben: Fehler und Vorschläge bitte unter {issues_url} melden.",
+        "data": {
+          "api_token": "Cloudflare-API-Token"
+        },
+        "data_description": {
+          "api_token": "Wird in Home Assistant gespeichert und nur an Cloudflare gesendet."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Neues Cloudflare-API-Token",
+        "description": "Cloudflare hat das API-Token abgelehnt, daher sind die Ausfallmarker ausgeschaltet. Erstellen Sie unter {token_url} ein neues (ein benutzerdefiniertes Token mit Account > Radar > Read) und geben Sie es hier ein.",
+        "data": {
+          "api_token": "Cloudflare-API-Token"
+        }
+      },
+      "reconfigure": {
+        "title": "Cloudflare-API-Token ändern",
+        "description": "Geben Sie ein anderes Cloudflare-API-Token ein (ein benutzerdefiniertes Token mit Account > Radar > Read, erstellt unter {token_url}).",
+        "data": {
+          "api_token": "Cloudflare-API-Token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare hat dieses Token abgelehnt. Prüfen Sie, ob es Account > Radar > Read hat und nicht abgelaufen ist.",
+      "cannot_connect": "Cloudflare war nicht erreichbar. Versuchen Sie es in einigen Minuten erneut.",
+      "unknown": "Cloudflare hat eine Antwort gegeben, die Live Track Internet nicht erwartet hat. Versuchen Sie es erneut und melden Sie es, wenn es sich wiederholt."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet ist bereits eingerichtet.",
+      "single_instance_allowed": "Live Track Internet ist bereits eingerichtet.",
+      "reauth_successful": "Das neue Token funktioniert. Die Ausfallmarker sind wieder da.",
+      "reconfigure_successful": "Das neue Token funktioniert."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Internetausfälle"
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Muestra los cortes de internet en el mapa de Live Track: los registros de cortes de Cloudflare Radar, un marcador por cada corte en curso, situado en el país o la región que nombra. Necesitas tu propio token de API de Cloudflare, gratuito. Créalo en {token_url}: elige un token personalizado («Custom token») y dale el permiso Account > Radar > Read. Con él, Home Assistant pide a Cloudflare la lista de cortes cada 15 minutos. Los datos de Cloudflare Radar tienen licencia CC BY-NC 4.0, para uso no comercial. Esta traducción se escribió sin un hablante nativo: avísanos de errores y sugerencias en {issues_url}.",
+        "data": {
+          "api_token": "Token de API de Cloudflare"
+        },
+        "data_description": {
+          "api_token": "Se guarda en Home Assistant y solo se envía a Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Nuevo token de API de Cloudflare",
+        "description": "Cloudflare rechazó el token de API, así que los marcadores de cortes están desactivados. Crea uno nuevo en {token_url} (un token personalizado con Account > Radar > Read) e introdúcelo aquí.",
+        "data": {
+          "api_token": "Token de API de Cloudflare"
+        }
+      },
+      "reconfigure": {
+        "title": "Cambiar el token de API de Cloudflare",
+        "description": "Introduce otro token de API de Cloudflare (un token personalizado con Account > Radar > Read, creado en {token_url}).",
+        "data": {
+          "api_token": "Token de API de Cloudflare"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare rechazó este token. Comprueba que tiene Account > Radar > Read y que no ha caducado.",
+      "cannot_connect": "No se pudo contactar con Cloudflare. Inténtalo de nuevo en unos minutos.",
+      "unknown": "Cloudflare dio una respuesta que Live Track Internet no esperaba. Inténtalo de nuevo y avísanos si se repite."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet ya está configurado.",
+      "single_instance_allowed": "Live Track Internet ya está configurado.",
+      "reauth_successful": "El nuevo token funciona. Los marcadores de cortes han vuelto.",
+      "reconfigure_successful": "El nuevo token funciona."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Cortes de internet"
+      }
+    }
+  }
+}

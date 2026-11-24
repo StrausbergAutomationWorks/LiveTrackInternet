@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "يعرض انقطاعات الإنترنت على خريطة Live Track: سجلات الانقطاع من Cloudflare Radar، علامة واحدة لكل انقطاع قائم، توضع في البلد أو المنطقة التي يذكرها السجل. تحتاج إلى رمز API مجاني خاص بك من Cloudflare. أنشئه من {token_url}: اختر Custom token (رمز مخصص) وامنحه الإذن Account > Radar > Read. يطلب Home Assistant به قائمة الانقطاعات من Cloudflare كل 15 دقيقة. بيانات Cloudflare Radar مرخّصة بموجب CC BY-NC 4.0، للاستخدام غير التجاري فقط. كُتبت هذه الترجمة دون متحدث أصلي باللغة: يُرجى الإبلاغ عن الأخطاء والاقتراحات على {issues_url}.",
+        "data": {
+          "api_token": "رمز API من Cloudflare"
+        },
+        "data_description": {
+          "api_token": "يُحفظ في Home Assistant ولا يُرسل إلا إلى Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "رمز API جديد من Cloudflare",
+        "description": "رفضت Cloudflare رمز API، لذا أُوقفت علامات الانقطاع. أنشئ رمزًا جديدًا من {token_url} (Custom token بالإذن Account > Radar > Read) وأدخله هنا.",
+        "data": {
+          "api_token": "رمز API من Cloudflare"
+        }
+      },
+      "reconfigure": {
+        "title": "تغيير رمز API من Cloudflare",
+        "description": "أدخل رمز API آخر من Cloudflare (Custom token بالإذن Account > Radar > Read، يُنشأ من {token_url}).",
+        "data": {
+          "api_token": "رمز API من Cloudflare"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "رفضت Cloudflare هذا الرمز. تحقق من أن له الإذن Account > Radar > Read وأن صلاحيته لم تنتهِ.",
+      "cannot_connect": "تعذّر الوصول إلى Cloudflare. حاول مرة أخرى بعد بضع دقائق.",
+      "unknown": "أرسلت Cloudflare ردًا لم يتوقعه Live Track Internet. حاول مرة أخرى، وأبلغ عنه إذا تكرر."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet مُعدّ بالفعل.",
+      "single_instance_allowed": "Live Track Internet مُعدّ بالفعل.",
+      "reauth_successful": "الرمز الجديد يعمل. عادت علامات الانقطاع.",
+      "reconfigure_successful": "الرمز الجديد يعمل."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "انقطاعات الإنترنت"
+      }
+    }
+  }
+}
