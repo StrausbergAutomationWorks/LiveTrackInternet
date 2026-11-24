@@ -1,0 +1,48 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Live Track Internet",
+        "description": "Puts internet outages on the Live Track map: Cloudflare Radar's outage records, one marker for each open outage, placed in the country or region it names. You need your own free Cloudflare API token. Make one at {token_url}: choose a Custom token and give it the permission Account > Radar > Read. Home Assistant asks Cloudflare for the outage list every 15 minutes with it. Cloudflare Radar's data is licensed CC BY-NC 4.0, for non-commercial use. Corrections to this dialog are welcome at {issues_url}.",
+        "data": {
+          "api_token": "Cloudflare API token"
+        },
+        "data_description": {
+          "api_token": "Kept in Home Assistant and sent only to Cloudflare."
+        }
+      },
+      "reauth_confirm": {
+        "title": "New Cloudflare API token",
+        "description": "Cloudflare refused the API token, so the outage markers are off. Make a new one at {token_url} (a Custom token with Account > Radar > Read) and enter it here.",
+        "data": {
+          "api_token": "Cloudflare API token"
+        }
+      },
+      "reconfigure": {
+        "title": "Change the Cloudflare API token",
+        "description": "Enter another Cloudflare API token (a Custom token with Account > Radar > Read, made at {token_url}).",
+        "data": {
+          "api_token": "Cloudflare API token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Cloudflare refused this token. Check that it has Account > Radar > Read and has not expired.",
+      "cannot_connect": "Cloudflare could not be reached. Try again in a few minutes.",
+      "unknown": "Cloudflare gave an answer Live Track Internet did not expect. Try again, and report it if it repeats."
+    },
+    "abort": {
+      "already_configured": "Live Track Internet is already set up.",
+      "single_instance_allowed": "Live Track Internet is already set up.",
+      "reauth_successful": "The new token works. The outage markers are back.",
+      "reconfigure_successful": "The new token works."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outages": {
+        "name": "Internet outages"
+      }
+    }
+  }
+}

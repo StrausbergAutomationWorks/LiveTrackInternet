@@ -1,0 +1,23 @@
+{
+  "domain": "live_track_internet",
+  "name": "Live Track Internet",
+  "after_dependencies": [
+    "lovelace"
+  ],
+  "codeowners": [
+    "@LeeS773-prog"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "http"
+  ],
+  "documentation": "https://github.com/StrausbergAutomationWorks/LiveTrackInternet",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/StrausbergAutomationWorks/LiveTrackInternet/issues",
+  "requirements": [
+    "saw-livetrack>=0.2.42,<0.3"
+  ],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
