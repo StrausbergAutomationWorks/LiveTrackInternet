@@ -71,6 +71,13 @@ class TestPackage(unittest.TestCase):
                                "Live Track Internet")
         self.assertIn("creativecommons.org/licenses/by-nc/4.0", a)
 
+    def test_count_sensor_entity_id(self):
+        """SSOT 5.6: sensor.live_track_internet_outages, not built from the device name (measured 2026-11-24)."""
+        src = (COMP / "sensor.py").read_text(encoding="utf-8")
+        found = re.findall(r'^\s*self\.entity_id = f"sensor\.\{DOMAIN\}_outages"$', src, re.M)
+        self.assertEqual(len(found), 1)
+        self.assertEqual(f"sensor.{load('const').DOMAIN}_outages", "sensor.live_track_internet_outages")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -31,6 +31,12 @@ class OutageCount(CoordinatorEntity[OutageCoordinator], SensorEntity):
     def __init__(self, coordinator: OutageCoordinator, entry: ConfigEntry) -> None:
         super().__init__(coordinator)
         self._attr_unique_id = f"{DOMAIN}_outages"
+        # SSOT 5.6 names this sensor.live_track_internet_outages. With has_entity_name and the device named
+        # "Cloudflare Radar", Home Assistant built sensor.cloudflare_radar_internet_outages instead (measured on the
+        # box 2026-11-24). An entity_id set before the entity is added is taken as the suggested id at FIRST
+        # registration (Home Assistant 2026.11.2 entity_platform.py, read on the box); after that the registry
+        # owns the id, so this does not rename an existing install.
+        self.entity_id = f"sensor.{DOMAIN}_outages"
         self._attr_device_info = DeviceInfo(identifiers={(DOMAIN, entry.entry_id)}, name="Cloudflare Radar",
                                             manufacturer="Cloudflare", model="Radar outage records",
                                             sw_version=VERSION, entry_type=DeviceEntryType.SERVICE,
