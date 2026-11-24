@@ -1,4 +1,4 @@
-/*! live-track-map-card 0.1.9+ae5443e */
+/*! live-track-map-card 0.1.10+69fa255 */
 /*!
  * Third-party notices for the packages bundled in this file:
  *
@@ -21369,7 +21369,7 @@ class MapConfig {
 
 }
 
-/* global "0.1.9+ae5443e" */
+/* global "0.1.10+69fa255" */
 
 /**
  * This card's version, stamped in at build time by build/stamp-version.js:
@@ -21379,7 +21379,7 @@ class MapConfig {
  * "0.0.0-unbuilt", which can never be mistaken for a release.
  * @type {string}
  */
-const VERSION = "0.1.9+ae5443e" ;
+const VERSION = "0.1.10+69fa255" ;
 
 class HaUrlResolveService {
   hass;
@@ -25938,6 +25938,34 @@ function layerLabel(hass, id, itemName) {
 }
 
 /**
+ * Whether a publisher's layer checkbox starts ticked (06_MAP_CONTRACT_OVERLAYS.md D12 rule 4 and D19 rule 5, as
+ * amended for Live Track Internet, backlog 363). A publisher may declare `layer_default: "off"`: its box starts
+ * unticked. Anything else, or nothing, starts it ticked, as before. A dashboard's explicit `show` wins over the
+ * publisher, and the viewer's own stored choice wins over both (TileLayersService.addOverlay).
+ */
+
+/** The one value that starts a publisher's box unticked. */
+const LAYER_DEFAULT_OFF = "off";
+
+/**
+ * @param {object|undefined} attributes the publisher's attributes
+ * @returns {boolean} false only for `layer_default: "off"`
+ */
+function publisherShownByDefault(attributes) {
+  return attributes?.layer_default !== LAYER_DEFAULT_OFF;
+}
+
+/**
+ * The default to hand the layer control: the dashboard's `show` when it set one, else the publisher's.
+ * @param {?boolean} dashboardShow `show` from `shape_layers` / `point_layers`, or null when not set
+ * @param {object|undefined} attributes the publisher's attributes
+ * @returns {boolean}
+ */
+function layerShown(dashboardShow, attributes) {
+  return typeof dashboardShow === "boolean" ? dashboardShow : publisherShownByDefault(attributes);
+}
+
+/**
  * Shapes on the map (06_MAP_CONTRACT.md D12, backlog 277).
  *
  * A publisher is one entity whose `shapes_url` names a file of shapes by key
@@ -25947,9 +25975,15 @@ function layerLabel(hass, id, itemName) {
  * keeps it in memory only, and fills translucent shapes over the tiles and
  * under every marker, lowest priority first. Nothing here names a publisher.
  * A `polygons` item carrying `info` {title, text} is clickable and shows it
- * (D12 as amended for Live Track Weather item 310); every other shape stays
- * non-interactive.
+ * (D12 as amended for Live Track Weather item 310); so is a key whose file
+ * carries `info` beside `shapes` (amended for Live Track Internet, backlog
+ * 363); every other shape stays non-interactive. A key's geometry in the file
+ * may be a line, drawn as a `polygons` line is (backlog 363). A publisher may
+ * start its checkbox unticked with `layer_default: "off"` (backlog 363).
  */
+
+/** A clickable line is answered this many px wide, whatever its drawn weight (backlog 363). */
+const LINE_HIT_PX = 12;
 
 /** Colour and priority for an event the publisher sent no style for (D12 rule 8). */
 const UNKNOWN_STYLE = Object.freeze({ color: "#808080", priority: 999 });
@@ -25959,6 +25993,15 @@ const CASING_PX = 1;
 
 /** After a failed fetch, the same URL is tried again no sooner than this (D12 rule 6). */
 const RETRY_MS = 10 * 60 * 1000;
+
+/**
+ * Lines from a shape FILE (backlog 363: Live Track Internet's "all cables") are
+ * reference, drawn thin and faint under everything live; `shape_style`'s
+ * `file_line_weight` and `file_line_opacity` override each. Decided 2026-11-24:
+ * a card default for file lines, the values picked from pictures. Lines in
+ * `polygons` (storms, cables in trouble) keep the outline's weight and opacity.
+ */
+const DEFAULT_FILE_LINE_STYLE = Object.freeze({ weight: 1, opacity: 0.5 });
 
 /**
  * Defaults; `shape_style` in the card config overrides each. Chosen by Lee
@@ -26024,9 +26067,10 @@ function discoverPublishers(states) {
 
 /**
  * `shape_layers`: absent or "auto" discovers; false turns it off; a list names
- * publishers as `{entity, name, show}` or a bare entity id.
+ * publishers as `{entity, name, show}` or a bare entity id. `show` is null when
+ * the dashboard set none, so the publisher's `layer_default` decides (backlog 363).
  * @param {*} input
- * @returns {{mode: "auto"}|{mode: "off"}|{mode: "list", items: {entity: string, name: ?string, show: boolean}[]}}
+ * @returns {{mode: "auto"}|{mode: "off"}|{mode: "list", items: {entity: string, name: ?string, show: ?boolean}[]}}
  */
 function parseShapeLayersOption(input) {
   if (input === undefined || input === null || input === true || input === "auto") return { mode: "auto" };
@@ -26046,7 +26090,7 @@ function parseShapeLayersOption(input) {
     items.push({
       entity,
       name: typeof o.name === "string" && o.name.trim() !== "" ? o.name.trim() : null,
-      show: o.show !== false,
+      show: typeof o.show === "boolean" ? o.show : null,
     });
   }
   return { mode: "list", items };
@@ -26066,6 +26110,22 @@ function parseShapeStyle(input) {
   if (typeof input.weight === "number" && Number.isFinite(input.weight) && input.weight >= 0) s.weight = input.weight;
   if (input.renderer === "canvas" || input.renderer === "svg") s.renderer = input.renderer;
   if (typeof input.by_priority === "boolean") s.byPriority = input.by_priority;
+  return s;
+}
+
+/**
+ * `shape_style`'s `file_line_weight` (px, 0 or more) and `file_line_opacity`
+ * (0-1), each optional; anything else keeps the default (backlog 363).
+ * @param {*} input the card's `shape_style`
+ * @returns {{weight: number, opacity: number}}
+ */
+function parseFileLineStyle(input) {
+  const s = { ...DEFAULT_FILE_LINE_STYLE };
+  if (!isPlainObject$1(input)) return s;
+  const w = input.file_line_weight;
+  const o = input.file_line_opacity;
+  if (typeof w === "number" && Number.isFinite(w) && w >= 0) s.weight = w;
+  if (typeof o === "number" && Number.isFinite(o) && o >= 0 && o <= 1) s.opacity = o;
   return s;
 }
 
@@ -26108,12 +26168,15 @@ function isLine(g) {
 /**
  * The list to draw, in drawing order (D12 rules 3, 5, 7, 8): largest priority
  * first, 1 last; within a priority zones before polygons; zones by key,
- * polygons in the order sent.
+ * polygons in the order sent. A zone whose geometry is a line carries
+ * `line: true`; a zone whose key has an entry in the file's `info` carries it
+ * (both backlog 363).
  * @param {object} attributes the publisher's attributes
  * @param {?object} shapes the file's `shapes`, or null before it arrives
- * @returns {{items: {kind: string, key: ?string, event: string, geometry: object, color: string, priority: number}[], missing: string[]}}
+ * @param {?object} [infos] the file's `info`, `{key: {title, text}}`, or null
+ * @returns {{items: {kind: string, key: ?string, event: string, geometry: object, color: string, priority: number, line?: boolean, info?: object}[], missing: string[]}}
  */
-function buildDrawList(attributes, shapes) {
+function buildDrawList(attributes, shapes, infos = null) {
   const items = [];
   const missing = [];
   const styles = attributes?.styles;
@@ -26122,8 +26185,10 @@ function buildDrawList(attributes, shapes) {
       const event = attributes.zones[key];
       if (typeof event !== "string") continue;
       const geometry = shapes[key];
-      if (!isArea(geometry)) { missing.push(key); continue; }
-      items.push({ kind: "zone", key, event, geometry, ...styleFor(event, styles) });
+      const line = isLine(geometry);
+      if (!isArea(geometry) && !line) { missing.push(key); continue; }
+      const info = isPlainObject$1(infos) ? infoOf(infos[key]) : null;
+      items.push({ kind: "zone", key, event, geometry, ...styleFor(event, styles), ...(line ? { line: true } : {}), ...(info ? { info } : {}) });
     }
   }
   const polygons = Array.isArray(attributes?.polygons) ? attributes.polygons : [];
@@ -26174,6 +26239,16 @@ function shapesOf(json) {
   return isPlainObject$1(json) && isPlainObject$1(json.shapes) ? json.shapes : null;
 }
 
+/**
+ * A parsed file's `info`, the clickable text per key beside `shapes` (backlog 363).
+ * Optional: a file without it, or with anything but a mapping, has none.
+ * @param {*} json
+ * @returns {?object}
+ */
+function infosOf(json) {
+  return isPlainObject$1(json) && isPlainObject$1(json.info) ? json.info : null;
+}
+
 class ShapeLayersService {
   /**
    * @param {L.Map} map
@@ -26186,10 +26261,13 @@ class ShapeLayersService {
     this.map = map;
     this.option = parseShapeLayersOption(option);
     this.style = parseShapeStyle(styleOption);
+    this.fileLine = parseFileLineStyle(styleOption);
     this.overlays = overlays;
     this.fetch = deps.fetch ?? ((...a) => globalThis.fetch(...a));
     this.now = deps.now ?? (() => Date.now());
     this.area = deps.area ?? null;
+    /** Set by MapCard: opens the popup of a dot under a container point, returns whether it did (D19 rule 4). */
+    this.pointsFirst = deps.pointsFirst ?? null;
     this.hass = null;
     this.renderer = null;
     /** @type {Map<string, {group: object, url: ?string, state: ?object, fileStatus: ?string, drawn: number}>} */
@@ -26227,13 +26305,13 @@ class ShapeLayersService {
 
   /**
    * @param {object} states
-   * @returns {Map<string, {name: ?string, show: boolean}>} publishers to keep a checkbox for
+   * @returns {Map<string, {name: ?string, show: ?boolean}>} publishers to keep a checkbox for
    */
   _wanted(states) {
     const out = new Map();
     if (this.option.mode === "off") return out;
     if (this.option.mode === "auto") {
-      for (const id of discoverPublishers(states)) out.set(id, { name: null, show: true });
+      for (const id of discoverPublishers(states)) out.set(id, { name: null, show: null });
       return out;
     }
     // A named entity keeps its checkbox while it exists, drawn or not.
@@ -26245,7 +26323,7 @@ class ShapeLayersService {
 
   /**
    * @param {string} id
-   * @param {{name: ?string, show: boolean}} item
+   * @param {{name: ?string, show: ?boolean}} item
    * @param {object} state
    */
   _update(id, item, state) {
@@ -26255,7 +26333,8 @@ class ShapeLayersService {
       const group = L$2.layerGroup([], attribution ? { attribution } : {});
       // The device name left off the label (util/LayerLabel.js, Lee 2026-11-19).
       const label = layerLabel(this.hass ?? { states: { [id]: state } }, id, item.name);
-      this.overlays.addOverlay(group, label.name, item.show, label.former);
+      // The dashboard's `show`, else the publisher's `layer_default` (backlog 363); the viewer's tick wins over both.
+      this.overlays.addOverlay(group, label.name, layerShown(item.show, state?.attributes), label.former);
       p = { group, url: null, state: null, fileStatus: null, drawn: 0, order: 0 };
       this.publishers.set(id, p);
       // A re-ticked box puts its shapes back on top: restore the order (D16).
@@ -26278,7 +26357,7 @@ class ShapeLayersService {
     p.state = state;
     p.fileStatus = fileStatus;
     p.order = shapeOrderOf(state.attributes);
-    this._draw(p, state.attributes, fileStatus === "ok" ? file.shapes : null);
+    this._draw(p, state.attributes, fileStatus === "ok" ? file.shapes : null, fileStatus === "ok" ? file.info : null);
     this._restack(p);
   }
 
@@ -26327,6 +26406,7 @@ class ShapeLayersService {
         if (!shapes) throw new Error("no shapes mapping");
         entry.status = "ok";
         entry.shapes = shapes;
+        entry.info = infosOf(json);
       })
       .catch((e) => {
         if (e?.name === "AbortError") {
@@ -26351,10 +26431,11 @@ class ShapeLayersService {
    * @param {object} p the publisher record
    * @param {object} attributes
    * @param {?object} shapes
+   * @param {?object} [infos] the file's `info` (backlog 363)
    */
-  _draw(p, attributes, shapes) {
+  _draw(p, attributes, shapes, infos = null) {
     p.group.clearLayers();
-    const { items: all, missing } = buildDrawList(attributes, shapes);
+    const { items: all, missing } = buildDrawList(attributes, shapes, infos);
     const items = this.area ? all.filter((it) => geometryTouchesArea(it.geometry, this.area)) : all;
     for (const key of missing) {
       if (warnedKeys.has(key)) continue;
@@ -26365,18 +26446,26 @@ class ShapeLayersService {
     const renderer = this._renderer();
     items.forEach((it, i) => {
       const feature = { type: "Feature", properties: {}, geometry: it.geometry };
-      if (it.kind === "line" && it.casing) {
+      // A `polygons` line, or a key whose geometry in the file is a line (backlog 363).
+      const isLineItem = it.kind === "line" || it.line === true;
+      // A line from the FILE draws at the file-line style, a `polygons` line at the outline's (backlog 363).
+      const lineWeight = it.line === true ? this.fileLine.weight : this.style.weight;
+      const lineOpacity = it.line === true ? this.fileLine.opacity : this.style.opacity;
+      if (isLineItem && it.casing) {
         p.group.addLayer(L$2.geoJSON(feature, {
           interactive: false,
           renderer,
-          style: () => ({ color: it.casing, weight: this.style.weight + 2 * CASING_PX, opacity: this.style.opacity, fill: false }),
+          style: () => ({ color: it.casing, weight: lineWeight + 2 * CASING_PX, opacity: lineOpacity, fill: false }),
         }));
       }
+      // A clickable line is answered by a transparent band over it, LINE_HIT_PX wide (backlog 363): a 2 px
+      // line is too thin to hit with a finger. The drawn line itself stays non-interactive.
+      const band = isLineItem && !!it.info;
       const layer = L$2.geoJSON(feature, {
-        interactive: !!it.info,
+        interactive: !!it.info && !band,
         renderer,
-        style: () => (it.kind === "line"
-          ? { color: it.color, weight: this.style.weight, opacity: this.style.opacity, fill: false }
+        style: () => (isLineItem
+          ? { color: it.color, weight: lineWeight, opacity: lineOpacity, fill: false }
           : {
             color: it.color,
             fillColor: it.color,
@@ -26385,10 +26474,38 @@ class ShapeLayersService {
             fillOpacity: opacities[i],
           }),
       });
-      if (it.info) layer.bindPopup(infoHtml(it.info), INFO_POPUP);
+      if (it.info && !band) {
+        layer.bindPopup(infoHtml(it.info), INFO_POPUP);
+        this._dotsFirst(layer);
+      }
       p.group.addLayer(layer);
+      if (band) {
+        const hit = L$2.geoJSON(feature, {
+          interactive: true,
+          renderer,
+          style: () => ({ color: it.color, weight: Math.max(LINE_HIT_PX, lineWeight), opacity: 0, fill: false }),
+        });
+        hit.bindPopup(infoHtml(it.info), INFO_POPUP);
+        this._dotsFirst(hit);
+        p.group.addLayer(hit);
+      }
     });
     p.drawn = items.length;
+  }
+
+  /**
+   * A dot drawn over a clickable shape answers first (D19 rule 4 as amended 2026-11-24). Registered after the
+   * shape's own popup binding, so it runs after that popup opens; a dot's popup then replaces it (autoClose).
+   * @param {object} layer a clickable shape layer
+   */
+  _dotsFirst(layer) {
+    layer.on?.("click", (e) => {
+      try {
+        this.pointsFirst?.(e?.containerPoint);
+      } catch (err) {
+        Logger.error("[ShapeLayers] a dot under the click could not be asked; the shape's popup stays", err);
+      }
+    });
   }
 
   /** @param {object} p */
@@ -26478,9 +26595,10 @@ function discoverPointPublishers(states) {
 
 /**
  * `point_layers`: absent or "auto" discovers; false or "off" turns it off; a list names publishers as
- * `{entity, name, show}` or a bare entity id (as `shape_layers`).
+ * `{entity, name, show}` or a bare entity id (as `shape_layers`). `show` is null when the dashboard set none, so the
+ * publisher's `layer_default` decides (backlog 363).
  * @param {*} input
- * @returns {{mode: string, items?: {entity: string, name: ?string, show: boolean}[]}}
+ * @returns {{mode: string, items?: {entity: string, name: ?string, show: ?boolean}[]}}
  */
 function parsePointLayersOption(input) {
   if (input === undefined || input === null || input === true || input === "auto") return { mode: "auto" };
@@ -26493,7 +26611,7 @@ function parsePointLayersOption(input) {
     const entity = o.entity.trim();
     if (seen.has(entity)) continue;
     seen.add(entity);
-    items.push({ entity, name: typeof o.name === "string" && o.name.trim() ? o.name.trim() : null, show: o.show !== false });
+    items.push({ entity, name: typeof o.name === "string" && o.name.trim() ? o.name.trim() : null, show: typeof o.show === "boolean" ? o.show : null });
   }
   return { mode: "list", items };
 }
@@ -26848,7 +26966,7 @@ class PointLayersService {
     const out = new Map();
     if (this.option.mode === "off") return out;
     if (this.option.mode === "auto") {
-      for (const id of discoverPointPublishers(states)) out.set(id, { name: null, show: true });
+      for (const id of discoverPointPublishers(states)) out.set(id, { name: null, show: null });
       return out;
     }
     for (const it of this.option.items) if (states[it.entity]) out.set(it.entity, { name: it.name, show: it.show });
@@ -26865,7 +26983,8 @@ class PointLayersService {
       p = { layer, url: null, status: null, order: 0, state: null };
       this.publishers.set(id, p);
       layer.on?.("add", () => this._restack());
-      this.overlays.addOverlay(layer, label.name, item.show, label.former);
+      // The dashboard's `show`, else the publisher's `layer_default` (backlog 363); the viewer's tick wins over both.
+      this.overlays.addOverlay(layer, label.name, layerShown(item.show, state?.attributes), label.former);
     }
     if (!isPointPublisherState(state)) {
       if (p.url || p.state) p.layer.setData(null, {});
@@ -26943,10 +27062,23 @@ class PointLayersService {
   }
 
   _click(e) {
-    const h = e?.containerPoint ? this._hitAt(e.containerPoint) : null;
-    if (!h) return;
+    this.openAt(e?.containerPoint);
+  }
+
+  /**
+   * Opens the popup of the dot under a container point, the topmost publisher first. A clickable shape (D12) asks
+   * this on its own click, because the dots are drawn above the shapes and Leaflet stops a shape's click from
+   * reaching the map (Layer._openPopup: "prevent map click"). D19 rule 4 as amended 2026-11-24.
+   * @param {?{x: number, y: number}} cp a container point
+   * @returns {boolean} a dot was there and its popup opened
+   */
+  openAt(cp) {
+    if (this.disposed || !cp) return false;
+    const h = this._hitAt(cp);
+    if (!h) return false;
     const { latlng, html } = h.q.layer.popupFor(h.i);
     L$2.popup(INFO_POPUP).setLatLng(latlng).setContent(html).openOn(this.map);
+    return true;
   }
 
   _hover(e) {
@@ -34876,6 +35008,8 @@ class MapCard extends i {
     this.shapeLayersService = new ShapeLayersService(this.map, this._config.shapeLayers, this._config.shapeStyle, this.tileLayersService, { area: this._config.weatherArea });
     // Points on the map (D19): dots from a publisher's file, above the fills, below the markers.
     this.pointLayersService = new PointLayersService(this.map, this._config.pointLayers, this.tileLayersService, { area: this._config.weatherArea });
+    // A dot answers before a clickable shape under it: a shape's click never reaches the map (D19 rule 4).
+    this.shapeLayersService.pointsFirst = (cp) => this.pointLayersService?.openAt(cp) ?? false;
     // The weather radar overlay (D13): one layer, its own pane under the fills.
     this.radarOverlayService = new RadarOverlayService(this.map, this._config.weatherRadar, this.tileLayersService, { area: this._config.weatherArea });
     // Lightning (D14): its own pane right above the radar's.
