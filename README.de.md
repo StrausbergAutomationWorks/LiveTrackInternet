@@ -21,7 +21,7 @@ die ITU erfasst. Nennt ein Ausfall ein Kabel, wird dieses Kabel rot gezeichnet.
 > etwas? [Schlagen Sie es vor](#helfen-sie-mit-es-zu-erweitern), oder fügen Sie
 > es selbst hinzu: Wir helfen Ihnen dabei.
 
-**Status: 0.3.0, die erste Veröffentlichung.** Dem Marketplace per Link
+**Status: 0.3.1, veröffentlicht.** Dem Marketplace per Link
 hinzugefügt ([unten](#installation-schritt-für-schritt)); im Katalog des
 Marketplace ist es noch nicht.
 

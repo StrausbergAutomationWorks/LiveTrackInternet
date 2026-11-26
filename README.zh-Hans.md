@@ -18,7 +18,7 @@ Live Track Internet 把 Cloudflare Radar 在世界各地记录的互联网中断
 > 中心）。缺少什么吗？[提出建议](#帮助它成长)，或者自己添加：我们会帮助你
 > 完成。
 
-**状态：0.3.0，首个版本。** 已通过链接添加到 Marketplace（[见下文](#安装步骤)）；
+**状态：0.3.1，已发布。** 已通过链接添加到 Marketplace（[见下文](#安装步骤)）；
 它还不在 Marketplace 的目录中。
 
 StrausbergAutomationWorks 的原创作品。与 Cloudflare、Tristan Hotham、

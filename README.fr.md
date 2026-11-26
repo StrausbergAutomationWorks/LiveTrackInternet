@@ -23,7 +23,7 @@ est dessiné en rouge.
 > [Proposez-le](#aidez-le-à-grandir), ou ajoutez-le vous-même : nous vous
 > aiderons à le faire.
 
-**État : 0.3.0, la première version.** Ajouté au Marketplace par son lien
+**État : 0.3.1, publié.** Ajouté au Marketplace par son lien
 ([ci-dessous](#installation-pas-à-pas)) ; il n'est pas encore dans le
 catalogue du Marketplace.
 

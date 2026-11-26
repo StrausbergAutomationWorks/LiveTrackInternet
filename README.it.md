@@ -23,7 +23,7 @@ cavo, quel cavo viene disegnato in rosso.
 > [Suggeriscilo](#aiutaci-a-farlo-crescere), o aggiungilo tu: ti aiuteremo a
 > farlo.
 
-**Stato: 0.3.0, la prima versione.** Aggiunto al Marketplace tramite il suo
+**Stato: 0.3.1, pubblicato.** Aggiunto al Marketplace tramite il suo
 collegamento ([più sotto](#installazione-passo-dopo-passo)); non è ancora nel
 catalogo del Marketplace.
 

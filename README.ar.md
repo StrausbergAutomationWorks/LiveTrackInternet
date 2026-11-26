@@ -11,7 +11,7 @@
 يسجّلها الاتحاد الدولي للاتصالات (ITU). وعندما يذكر انقطاعٌ كابلًا، يُرسم هذا
 الكابل باللون الأحمر.
 
-> **Live Track Internet وحدة من وحدات Live Track**، وهي عائلة من تكاملات Home
+> ‏**Live Track Internet وحدة من وحدات Live Track**، وهي عائلة من تكاملات Home
 > Assistant ترسم كل ما يتحرك، والطقس الذي يتحرك فيه، على خريطة مشتركة واحدة:
 > الطائرات والسفن والقطارات والطقس. ثبّته وحده أو إلى جانب الوحدات الأخرى
 > ([القائمة أدناه](#جزء-من-live-track-الوحدات-الأخرى)).
@@ -21,7 +21,7 @@
 > تبادل الإنترنت ومراكز البيانات مخطط لها). هل ينقص شيء؟
 > [اقترحه](#ساعدنا-على-توسيعه)، أو أضفه بنفسك: سنساعدك على ذلك.
 
-**الحالة: 0.3.0، الإصدار الأول.** أُضيف إلى Marketplace عبر رابطه
+**الحالة: 0.3.1، صدر.** أُضيف إلى Marketplace عبر رابطه
 ([أدناه](#التثبيت-خطوة-بخطوة))؛ وهو ليس في كتالوج Marketplace بعد.
 
 عمل أصلي من StrausbergAutomationWorks. لا علاقة له بـ Cloudflare أو Tristan
@@ -109,7 +109,7 @@ Hotham أو TeleGeography أو الاتحاد الدولي للاتصالات (I
 
 ## جزء من Live Track: الوحدات الأخرى
 
-Live Track مجموعة من تكاملات Home Assistant، تكامل لكل نوع من الأشياء المتحركة،
+‏Live Track مجموعة من تكاملات Home Assistant، تكامل لكل نوع من الأشياء المتحركة،
 وكلها مرسومة على بطاقة الخريطة نفسها. كل منها يعمل وحده؛ ومعًا تصنع صورة حية
 واحدة. تتشارك بطاقة الخريطة ومكتبة Python
 ([saw-livetrack](https://github.com/StrausbergAutomationWorks/LiveTrackCore))،
@@ -138,7 +138,7 @@ Live Track مجموعة من تكاملات Home Assistant، تكامل لكل �
 
 ## قبل أن تبدأ
 
-* **Home Assistant** 2026.11 أو أحدث.
+* ‏**Home Assistant** 2026.11 أو أحدث.
 * **Marketplace** (HACS) في Home Assistant لديك، لتثبيته وتحديثه بسهولة. ومن
   دونه يمكنك نسخ الملفات يدويًا.
 * **وصول إلى الإنترنت** لـ Home Assistant: الانقطاعات والوصلات البرية تأتي من
@@ -154,7 +154,7 @@ Live Track مجموعة من تكاملات Home Assistant، تكامل لكل �
 
 ### من Marketplace (موصى به)
 
-Live Track Internet ليس في كتالوج Marketplace بعد. أضفه عبر رابطه:
+‏Live Track Internet ليس في كتالوج Marketplace بعد. أضفه عبر رابطه:
 
 1. في Home Assistant، افتح **إعدادات ← Marketplace** (HACS).
 2. اختر علامة التبويب **Add from link**.
@@ -565,7 +565,7 @@ English وDeutsch وEspañol وFrançais وItaliano وNederlands و简体中文 
 
 ## الشكر والتراخيص
 
-* **Cloudflare Radar** (Cloudflare, Inc.، <https://radar.cloudflare.com>):
+* ‏**Cloudflare Radar** (Cloudflare, Inc.، <https://radar.cloudflare.com>):
   سجلات الانقطاع، بترخيص
   [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)، تُقرأ برمز
   كل مستخدم الخاص. يضع هذا التكامل كل سجل على الخريطة؛ ولا يغيّر السجلات. بتثبيت
@@ -608,7 +608,7 @@ Hotham. وتعمل الاختبارات بـ `python -m unittest discover -s tes
 
 ## كلمات مفتاحية
 
-Home Assistant انقطاع الإنترنت · خريطة انقطاعات الإنترنت · قطع الإنترنت · انقطاع
+‏Home Assistant انقطاع الإنترنت · خريطة انقطاعات الإنترنت · قطع الإنترنت · انقطاع
 الشبكة · عطل مزوّد الخدمة · Cloudflare Radar · Radar Outage Center · كابلات
 بحرية · كابل بحري · خريطة الكابلات البحرية · قطع كابل · نقاط إنزال الكابلات ·
 TeleGeography · Submarine Cable Map · ألياف برية · خريطة الألياف الضوئية ·

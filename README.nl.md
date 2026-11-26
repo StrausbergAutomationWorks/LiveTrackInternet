@@ -21,7 +21,7 @@ kabel noemt, wordt die kabel rood getekend.
 > Ontbreekt er iets? [Stel het voor](#help-het-groeien), of voeg het zelf toe:
 > we helpen je daarbij.
 
-**Status: 0.3.0, de eerste release.** Via de link aan de Marktplaats
+**Status: 0.3.1, uitgebracht.** Via de link aan de Marktplaats
 toegevoegd ([hieronder](#installeren-stap-voor-stap)); het staat nog niet in de
 catalogus van de Marktplaats.
 

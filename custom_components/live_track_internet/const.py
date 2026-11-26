@@ -4,7 +4,7 @@ from __future__ import annotations
 
 DOMAIN = "live_track_internet"
 NAME = "Live Track Internet"
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 
 CONF_API_TOKEN = "api_token"
 # The weekly fetch of ITU's terrestrial links (SSOT 7.6 item 6): on by default; an entry without the key is on.

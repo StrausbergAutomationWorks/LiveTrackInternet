@@ -4,6 +4,9 @@
   "after_dependencies": [
     "lovelace"
   ],
+  "categories": [
+    "computers_network.monitoring"
+  ],
   "codeowners": [
     "@LeeS773-prog"
   ],
@@ -19,5 +22,5 @@
     "saw-livetrack>=0.2.42,<0.3"
   ],
   "single_config_entry": true,
-  "version": "0.3.0"
+  "version": "0.3.1"
 }
