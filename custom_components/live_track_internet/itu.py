@@ -6,7 +6,7 @@ ITU's GeoServer serves the Infrastructure Connectivity Map's links as a keyless 
 operator, name, capacity or date (measured 2026-11-25, section 7.1). Used under ITU's terms for non-commercial use,
 the source acknowledged (section 0 item 16). Each install fetches the layer for itself once a week (item 17).
 
-The fetch (section 7.3, approved by Lee 2026-11-25):
+The fetch (section 7.3, approved 2026-11-25):
 
 * Pages of PAGE features sorted by `uid`, PAGE_GAP_S apart, gzip. ITU allows up to 1,000,000 a request (its
   capabilities' CountDefault); 5,000 keeps one page about 1.5 MB decoded. About 111 KB a page on the wire.
@@ -57,7 +57,7 @@ ATTRIBUTION = ("Terrestrial links: ITU Broadband Maps (BBmaps), bbmaps.itu.int, 
                "to node, placed on the map by Live Track Internet")
 SOURCE = f"ITU Broadband Maps (BBmaps), WFS {LAYER}"
 
-# Section 7.4, set M (Lee 2026-11-25 17:52): fibre plum, microwave yellow cased black at every status, planned,
+# Section 7.4, set M (2026-11-25): fibre plum, microwave yellow cased black at every status, planned,
 # proposed and under construction orange (the planned cables' orange), status not given grey.
 ORANGE, GREY = "#D9822B", "#808080"
 STYLES: dict[str, dict[str, Any]] = {

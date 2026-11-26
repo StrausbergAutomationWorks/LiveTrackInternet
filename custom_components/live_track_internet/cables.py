@@ -49,7 +49,7 @@ ATTRIBUTION = ("Cables: Hotham (2026), The internet's seabed, doi:10.5281/zenodo
                "CC BY-NC-SA 4.0 (creativecommons.org/licenses/by-nc-sa/4.0), converted and joined by Live Track "
                "Internet")
 
-# Colours (Lee 2026-11-24, from pictures): in-service cables blue, planned orange, trouble red with a white casing.
+# Colours (chosen 2026-11-24, from pictures): in-service cables blue, planned orange, trouble red with a white casing.
 # The card draws lines from the file at its own thin, faint default (1 px at 0.5); weight and opacity are the card's.
 ALL_STYLES = {"in_service": {"color": "#3F6E9A", "priority": 9},
               "planned": {"color": "#D9822B", "priority": 10}}

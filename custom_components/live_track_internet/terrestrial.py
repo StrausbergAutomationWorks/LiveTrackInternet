@@ -1,4 +1,4 @@
-"""Fetches ITU's terrestrial links once a week and keeps the built file (SAW SSOT section 7.3, approved by Lee
+"""Fetches ITU's terrestrial links once a week and keeps the built file (SAW SSOT section 7.3, approved
 2026-11-25). The rules live in itu.py, which has no Home Assistant; this is the timer, the HTTP and the disk.
 
 * At start the last good file is read from .storage (SAW-neutral name), so a restart while ITU is down still draws.

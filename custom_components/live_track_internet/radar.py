@@ -4,7 +4,7 @@ without it.
 * Only OPEN records (no endDate) are drawn; PLATFORM records never are (5.1): they name a service, not a place.
 * Placement, first that applies (5.2): GeoNames ids -> one marker per region, at the point Radar's own
   /radar/geolocations gives; a country -> Radar's country point; networks only -> each network's country, with a note
-  that it is placed at the country's centre (Lee 2026-11-23 20:54); nothing -> not drawn.
+  that it is placed at the country's centre (2026-11-23); nothing -> not drawn.
 * The record shape is Live Track Weather's (key, name, lat, lon, attrs), contract D20. D0: anything unknown is
   OMITTED, never sent as a placeholder; no last_seen, observed_at or previous_* (a record has no update time and
   does not move).

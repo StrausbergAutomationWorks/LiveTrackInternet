@@ -189,7 +189,7 @@ class TestPublisher(unittest.TestCase):
         self.assertNotIn("info", json.dumps(a))
 
     def test_set_m(self):
-        """SSOT 7.4, set M (Lee 2026-11-25 17:52)."""
+        """SSOT 7.4, set M (2026-11-25)."""
         s = itu.STYLES
         self.assertEqual(s["fibre_operational"], {"color": "#861360", "priority": 9})
         self.assertEqual(s["microwave_operational"], {"color": "#FFD633", "priority": 9, "casing": "#000000"})

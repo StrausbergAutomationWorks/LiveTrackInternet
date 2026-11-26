@@ -63,7 +63,7 @@ class TestPlacement(unittest.TestCase):
         self.assertEqual(m[0]["attrs"]["place_kind"], "country")
 
     def test_network_only_is_placed_at_its_country_with_a_note(self):
-        """Lee 2026-11-23 20:54: at the country's centre point, with a note; RU networks included."""
+        """2026-11-23: at the country's centre point, with a note; RU networks included."""
         m, _ = radar.build_markers([rec("5", cause="MILITARY_ACTION", otype="NETWORK",
                                         asns=[("29031", "LTC", "RU")])], COUNTRIES, REGIONS, ICONS)
         a = m[0]["attrs"]

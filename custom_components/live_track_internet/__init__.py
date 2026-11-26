@@ -79,7 +79,7 @@ def itu_links_on(entry: ConfigEntry) -> bool:
 
 def _remove_links_entity(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Option off: no publisher at all, so the map shows no dead checkbox (D12 rule 10). The cache file stays in
-    .storage (SAW-neutral; Lee 2026-11-25)."""
+    .storage (SAW-neutral)."""
     ent = er.async_get(hass)
     if eid := ent.async_get_entity_id("sensor", DOMAIN, LINKS_UNIQUE_ID):
         ent.async_remove(eid)
