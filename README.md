@@ -20,7 +20,7 @@ cable, that cable is drawn in red.
 > (internet exchanges and data centres are planned). Is something missing?
 > [Suggest it](#help-it-grow), or add it yourself: we will help you do it.
 
-**Status: 0.3.1, released.** Added to the Marketplace by link
+**Status: 0.3.2, released.** Added to the Marketplace by link
 ([below](#install-it-step-by-step)); it is not in the Marketplace's catalog
 yet.
 

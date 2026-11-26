@@ -1,4 +1,4 @@
-/*! live-track-map-card 0.1.10+69fa255 */
+/*! live-track-map-card 0.1.12+4cc0970 */
 /*!
  * Third-party notices for the packages bundled in this file:
  *
@@ -14806,6 +14806,88 @@ const t=globalThis,i$1=t=>t,s$1=t.trustedTypes,e=s$1?s$1.createPolicy("lit-html"
  */const s=globalThis;class i extends y$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=D(r,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(true);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(false);}render(){return E}}i._$litElement$=true,i["finalized"]=true,s.litElementHydrateSupport?.({LitElement:i});const o=s.litElementPolyfillSupport;o?.({LitElement:i});(s.litElementVersions??=[]).push("4.2.2");
 
 /**
+ * Leaflet.markercluster 1.5.3's two stylesheets, MarkerCluster.css and MarkerCluster.Default.css, copied verbatim from
+ * the npm package so the card loads nothing from unpkg at runtime (LiveTrackMapCard#1, hacs/default #14498). MIT
+ * licence, (c) 2012 David Leaver; its notice is in the bundle's licence notices with the plugin's code.
+ * Regenerate from the package when the dependency changes: MarkerClusterCss.test.js fails until this matches it.
+ */
+const MARKERCLUSTER_CSS = `.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
+	-webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+	transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+}
+
+.leaflet-cluster-spider-leg {
+	/* stroke-dashoffset (duration and function) should match with leaflet-marker-icon transform in order to track it exactly */
+	-webkit-transition: -webkit-stroke-dashoffset 0.3s ease-out, -webkit-stroke-opacity 0.3s ease-in;
+	-moz-transition: -moz-stroke-dashoffset 0.3s ease-out, -moz-stroke-opacity 0.3s ease-in;
+	-o-transition: -o-stroke-dashoffset 0.3s ease-out, -o-stroke-opacity 0.3s ease-in;
+	transition: stroke-dashoffset 0.3s ease-out, stroke-opacity 0.3s ease-in;
+}
+.marker-cluster-small {
+	background-color: rgba(181, 226, 140, 0.6);
+	}
+.marker-cluster-small div {
+	background-color: rgba(110, 204, 57, 0.6);
+	}
+
+.marker-cluster-medium {
+	background-color: rgba(241, 211, 87, 0.6);
+	}
+.marker-cluster-medium div {
+	background-color: rgba(240, 194, 12, 0.6);
+	}
+
+.marker-cluster-large {
+	background-color: rgba(253, 156, 115, 0.6);
+	}
+.marker-cluster-large div {
+	background-color: rgba(241, 128, 23, 0.6);
+	}
+
+	/* IE 6-8 fallback colors */
+.leaflet-oldie .marker-cluster-small {
+	background-color: rgb(181, 226, 140);
+	}
+.leaflet-oldie .marker-cluster-small div {
+	background-color: rgb(110, 204, 57);
+	}
+
+.leaflet-oldie .marker-cluster-medium {
+	background-color: rgb(241, 211, 87);
+	}
+.leaflet-oldie .marker-cluster-medium div {
+	background-color: rgb(240, 194, 12);
+	}
+
+.leaflet-oldie .marker-cluster-large {
+	background-color: rgb(253, 156, 115);
+	}
+.leaflet-oldie .marker-cluster-large div {
+	background-color: rgb(241, 128, 23);
+}
+
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+	}
+.marker-cluster div {
+	width: 30px;
+	height: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+
+	text-align: center;
+	border-radius: 15px;
+	font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	}
+.marker-cluster span {
+	line-height: 30px;
+	}
+`;
+
+/**
  * `weather_area`: the one place weather is drawn (Lee, 2026-11-02). Shapes outside it are not drawn and radar tiles
  * outside its box are not asked for. Nothing here names a publisher or a place.
  */
@@ -15888,6 +15970,52 @@ class GeoJsonLayerConfig {
 }
 
 /**
+ * HTML escaping for text that reaches the page as markup (LiveTrackMapCard#1, backlog 368). Leaflet writes a DivIcon's
+ * html, a tooltip or popup given as a string, a layers-control label and an attribution with innerHTML, and every
+ * name, state and attribute this card draws can come from another integration or straight from a public feed.
+ */
+
+const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+
+/**
+ * Text escaped for HTML: element content or a quoted attribute value, either quote. null and undefined are "".
+ * @param {*} value
+ * @returns {string}
+ */
+function escapeHtml$2(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (c) => ESCAPES[c]);
+}
+
+/**
+ * A marker attribute value: exactly what a template literal would have written (undefined stays "undefined", as
+ * the marker and the canvas expect), escaped.
+ * @param {*} value
+ * @returns {string}
+ */
+function attr(value) {
+  return escapeHtml$2(`${value}`);
+}
+
+const NAMED = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'" };
+
+/**
+ * The text an escaped attribute value stands for, as the browser reads it: the five named entities and numeric
+ * ones. Anything else is left as it is.
+ * @param {*} value
+ * @returns {string}
+ */
+function unescapeHtml(value) {
+  return String(value ?? "").replace(/&(#[xX][0-9a-fA-F]+|#[0-9]+|[a-zA-Z]+);/g, (whole, e) => {
+    if (e[0] === "#") {
+      const n = e[1] === "x" || e[1] === "X" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+      return Number.isFinite(n) && n >= 0 && n <= 0x10ffff ? String.fromCodePoint(n) : whole;
+    }
+    const k = e.toLowerCase();
+    return Object.prototype.hasOwnProperty.call(NAMED, k) ? NAMED[k] : whole;
+  });
+}
+
+/**
  * What a path-follower's plan() returns when there is no way round over water:
  * place the marker at its fix, never slide it across land (Lee, 2026-09-29,
  * ECLIPSE through the DuSable Harbor breakwater). Its own module so Entity can
@@ -16135,7 +16263,7 @@ class GeoJson {
     // Create a simple tooltip from properties
     const entries = Object.entries(properties)
       .filter(([, value]) => value !== null && value !== undefined)
-      .map(([key, value]) => `${key}: ${value}`)
+      .map(([key, value]) => `${escapeHtml$2(key)}: ${escapeHtml$2(value)}`)   // a tooltip string is innerHTML (LiveTrackMapCard#1)
       .slice(0, 5); // Limit to first 5 properties
 
     return entries.length > 0 ? entries.join('<br>') : '';
@@ -16269,7 +16397,7 @@ class EntityHistory {
               fillOpacity: opacity,
               interactive: true,
             }
-          ).bindTooltip(`${this.entityTitle} ${entry.timestamp.toLocaleString()}`, {direction: 'top'})
+          ).bindTooltip(escapeHtml$2(`${this.entityTitle} ${entry.timestamp.toLocaleString()}`), {direction: 'top'})
         );
       }
 
@@ -17857,7 +17985,8 @@ const SHADOW_EASE_MS = 3000;
 const SHADOW_EASE_STEPS = 30;
 
 /**
- * The attributes written into a marker's DivIcon html (Entity.createMapMarker).
+ * The attributes written into a marker's DivIcon html (Entity.createMapMarker), entities decoded: the values are
+ * written escaped (util/Html.js, LiveTrackMapCard#1).
  * @param {string} html
  * @returns {{[name: string]: string}}
  */
@@ -17865,7 +17994,7 @@ function parseAttrs(html) {
   const out = {};
   const re = /\s([a-z-]+)=(?:"([^"]*)"|'([^']*)')/g;
   let m;
-  while ((m = re.exec(html || ""))) out[m[1]] = m[2] !== undefined ? m[2] : m[3];
+  while ((m = re.exec(html || ""))) out[m[1]] = unescapeHtml(m[2] !== undefined ? m[2] : m[3]);
   return out;
 }
 
@@ -19656,7 +19785,7 @@ class Entity {
     if (entity && entity.state) {
       const distance = this.formatDistance(entity.state, this.config.distanceUnit);
       if (distance) {
-        this.marker.setTooltipContent(distance);
+        this.marker.setTooltipContent(escapeHtml$2(distance));
       }
     }
   }
@@ -20045,7 +20174,7 @@ class Entity {
       // Anchored on the preceding whitespace so `rotation` cannot match
       // inside `rotation-transition` or any other *-rotation attribute.
       const pattern = new RegExp(`(\\s)${name}="[^"]*"`);
-      iconOptions.html = iconOptions.html.replace(pattern, (_, ws) => `${ws}${name}="${text}"`);
+      iconOptions.html = iconOptions.html.replace(pattern, (_, ws) => `${ws}${name}="${attr(text)}"`);
     }
   }
 
@@ -20583,42 +20712,42 @@ class Entity {
       icon: new leafletSrcExports.DivIcon({
         html: `
           <${MARKER_TAG}
-            entity-id="${this.id}"
-            title="${this.title}"
-            label="${this.config.label ?? ""}"
-            prefix="${this.config.prefix}"
-            suffix="${this.config.suffix}"
-            tooltip="${this.tooltip}"
-            icon="${icon ?? ""}"
-            picture="${picture ?? ""}"
-            bare-picture="${this.barePicture ? "true" : ""}"
-            ground-shadow="${shadowAlt}"
-            rotation="${rotation ?? ""}"
-            rotation-transition="${this.config.rotationTransition ?? 0}"
-            color="${color}"
-            label-color="${labelColor ?? ""}"
-            arrow="${arrow ?? ""}"
-            label-outline="${styling["label-outline"]}"
-            arrow-color="${styling["arrow-color"]}"
-            arrow-outline="${styling["arrow-outline"]}"
-            ring-color="${styling["ring-color"]}"
-            ring-width="${styling["ring-width"]}"
-            inner-ring-color="${styling["inner-ring-color"]}"
-            inner-ring-width="${styling["inner-ring-width"]}"
-            shape="${styling["shape"]}"
-            symbol="${styling["symbol"]}"
-            alternate="${styling["alternate"]}"
-            label-placement="${styling["label-placement"]}"
-            symbol-color="${styling["symbol-color"]}"
-            symbol-outline="${styling["symbol-outline"]}"
-            delay-badge="${late["delay-badge"]}"
-            delay-level="${late["delay-level"]}"
-            pulse="${late["pulse"]}"
-            style="${this.config.css}"
-            size="${this.config.size}"
-            extra-css-classes="${extraCssClasses}"
-            tap-action='${JSON.stringify(this.config.tapAction)}'
-            info="${hasInfo ? "true" : ""}"
+            entity-id="${attr(this.id)}"
+            title="${attr(this.title)}"
+            label="${attr(this.config.label ?? "")}"
+            prefix="${attr(this.config.prefix)}"
+            suffix="${attr(this.config.suffix)}"
+            tooltip="${attr(this.tooltip)}"
+            icon="${attr(icon ?? "")}"
+            picture="${attr(picture ?? "")}"
+            bare-picture="${attr(this.barePicture ? "true" : "")}"
+            ground-shadow="${attr(shadowAlt)}"
+            rotation="${attr(rotation ?? "")}"
+            rotation-transition="${attr(this.config.rotationTransition ?? 0)}"
+            color="${attr(color)}"
+            label-color="${attr(labelColor ?? "")}"
+            arrow="${attr(arrow ?? "")}"
+            label-outline="${attr(styling["label-outline"])}"
+            arrow-color="${attr(styling["arrow-color"])}"
+            arrow-outline="${attr(styling["arrow-outline"])}"
+            ring-color="${attr(styling["ring-color"])}"
+            ring-width="${attr(styling["ring-width"])}"
+            inner-ring-color="${attr(styling["inner-ring-color"])}"
+            inner-ring-width="${attr(styling["inner-ring-width"])}"
+            shape="${attr(styling["shape"])}"
+            symbol="${attr(styling["symbol"])}"
+            alternate="${attr(styling["alternate"])}"
+            label-placement="${attr(styling["label-placement"])}"
+            symbol-color="${attr(styling["symbol-color"])}"
+            symbol-outline="${attr(styling["symbol-outline"])}"
+            delay-badge="${attr(late["delay-badge"])}"
+            delay-level="${attr(late["delay-level"])}"
+            pulse="${attr(late["pulse"])}"
+            style="${attr(this.config.css)}"
+            size="${attr(this.config.size)}"
+            extra-css-classes="${attr(extraCssClasses)}"
+            tap-action='${attr(JSON.stringify(this.config.tapAction))}'
+            info="${attr(hasInfo ? "true" : "")}"
           ></${MARKER_TAG}>
         `,
         iconSize: [s, s],
@@ -21369,7 +21498,7 @@ class MapConfig {
 
 }
 
-/* global "0.1.10+69fa255" */
+/* global "0.1.12+4cc0970" */
 
 /**
  * This card's version, stamped in at build time by build/stamp-version.js:
@@ -21379,7 +21508,7 @@ class MapConfig {
  * "0.0.0-unbuilt", which can never be mistaken for a release.
  * @type {string}
  */
-const VERSION = "0.1.10+69fa255" ;
+const VERSION = "0.1.12+4cc0970" ;
 
 class HaUrlResolveService {
   hass;
@@ -21934,7 +22063,8 @@ class TileLayersService {
     if (on) layer.addTo(this.map);
     const control = this._ensureControl();
     this.byLayer.set(layer, name);
-    control.addOverlay(layer, name);
+    // Leaflet writes the label with innerHTML, and a publisher names its own layer (LiveTrackMapCard#1).
+    control.addOverlay(layer, escapeHtml$2(name));
     return on;
   }
 
@@ -25977,7 +26107,9 @@ function layerShown(dashboardShow, attributes) {
  * A `polygons` item carrying `info` {title, text} is clickable and shows it
  * (D12 as amended for Live Track Weather item 310); so is a key whose file
  * carries `info` beside `shapes` (amended for Live Track Internet, backlog
- * 363); every other shape stays non-interactive. A key's geometry in the file
+ * 363), or a key with a live entry in the publisher's `zone_info`, which
+ * replaces the file's for that key (amended 2026-11-25); every other shape
+ * stays non-interactive. A key's geometry in the file
  * may be a line, drawn as a `polygons` line is (backlog 363). A publisher may
  * start its checkbox unticked with `layer_default: "off"` (backlog 363).
  */
@@ -26170,7 +26302,9 @@ function isLine(g) {
  * first, 1 last; within a priority zones before polygons; zones by key,
  * polygons in the order sent. A zone whose geometry is a line carries
  * `line: true`; a zone whose key has an entry in the file's `info` carries it
- * (both backlog 363).
+ * (both backlog 363). A valid entry in the publisher's live `zone_info` for
+ * that key is carried instead, whole, never merged with the file's; an entry
+ * that is not valid leaves the file's in force (D12 as amended 2026-11-25).
  * @param {object} attributes the publisher's attributes
  * @param {?object} shapes the file's `shapes`, or null before it arrives
  * @param {?object} [infos] the file's `info`, `{key: {title, text}}`, or null
@@ -26180,6 +26314,8 @@ function buildDrawList(attributes, shapes, infos = null) {
   const items = [];
   const missing = [];
   const styles = attributes?.styles;
+  // Live click text per key (D12 as amended 2026-11-25): it wins over the file's `info` for that key.
+  const live = isPlainObject$1(attributes?.zone_info) ? attributes.zone_info : null;
   if (isPlainObject$1(shapes) && isPlainObject$1(attributes?.zones)) {
     for (const key of Object.keys(attributes.zones).sort()) {
       const event = attributes.zones[key];
@@ -26187,7 +26323,7 @@ function buildDrawList(attributes, shapes, infos = null) {
       const geometry = shapes[key];
       const line = isLine(geometry);
       if (!isArea(geometry) && !line) { missing.push(key); continue; }
-      const info = isPlainObject$1(infos) ? infoOf(infos[key]) : null;
+      const info = (live ? infoOf(live[key]) : null) ?? (isPlainObject$1(infos) ? infoOf(infos[key]) : null);
       items.push({ kind: "zone", key, event, geometry, ...styleFor(event, styles), ...(line ? { line: true } : {}), ...(info ? { info } : {}) });
     }
   }
@@ -26330,7 +26466,8 @@ class ShapeLayersService {
     let p = this.publishers.get(id);
     if (!p) {
       const attribution = typeof state?.attributes?.attribution === "string" ? state.attributes.attribution : undefined;
-      const group = L$2.layerGroup([], attribution ? { attribution } : {});
+      // The attribution control writes it with innerHTML: the publisher's text, escaped (LiveTrackMapCard#1).
+      const group = L$2.layerGroup([], attribution ? { attribution: escapeHtml$2(attribution) } : {});
       // The device name left off the label (util/LayerLabel.js, Lee 2026-11-19).
       const label = layerLabel(this.hass ?? { states: { [id]: state } }, id, item.name);
       // The dashboard's `show`, else the publisher's `layer_default` (backlog 363); the viewer's tick wins over both.
@@ -26977,7 +27114,8 @@ class PointLayersService {
     let p = this.publishers.get(id);
     if (!p) {
       const attribution = typeof state?.attributes?.attribution === "string" ? state.attributes.attribution : undefined;
-      const layer = new PointCanvasLayer(attribution ? { attribution } : {});
+      // The attribution control writes it with innerHTML: the publisher's text, escaped (LiveTrackMapCard#1).
+      const layer = new PointCanvasLayer(attribution ? { attribution: escapeHtml$2(attribution) } : {});
       // The device name left off the label (util/LayerLabel.js, Lee 2026-11-19).
       const label = layerLabel(this.hass ?? { states: { [id]: state } }, id, item.name);
       p = { layer, url: null, status: null, order: 0, state: null };
@@ -35097,8 +35235,6 @@ class MapCard extends i {
 
     return b`
             <link rel="stylesheet" href="/static/images/leaflet/leaflet.css">
-            <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-            <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
             <ha-card header="${this._config.title}">
               <div id="mapContainer" style="min-height: ${this._config.mapHeight}px">
                 <div id="map" style="min-height: ${this._config.mapHeight}px">
@@ -35595,7 +35731,8 @@ class MapCard extends i {
   }
 
   static get styles() {
-    return i$3`
+    // The markercluster stylesheets are bundled, not loaded from unpkg at runtime (LiveTrackMapCard#1).
+    return [r$2(MARKERCLUSTER_CSS), i$3`
       ha-card {
         height: 100%;
         display: flex;
@@ -35803,7 +35940,7 @@ class MapCard extends i {
       .leaflet-tile-pane {
         filter: var(--map-filter);
       }
-    `;
+    `];
   }
 }
 

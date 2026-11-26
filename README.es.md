@@ -21,7 +21,7 @@ Cuando un corte nombra un cable, ese cable se dibuja en rojo.
 > de datos). ¿Falta algo? [Sugiérelo](#ayúdanos-a-hacerlo-crecer), o añádelo tú
 > mismo: te ayudaremos a hacerlo.
 
-**Estado: 0.3.1, publicado.** Añadido al Marketplace por su enlace
+**Estado: 0.3.2, publicado.** Añadido al Marketplace por su enlace
 ([más abajo](#instalación-paso-a-paso)); todavía no está en el catálogo del
 Marketplace.
 
