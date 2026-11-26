@@ -3,12 +3,14 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Affiche les pannes d'internet et les câbles sous-marins sur la carte Live Track. Câbles : chaque câble sous-marin et chaque point d'atterrissement du jeu de données de Tristan Hotham tiré des données de câbles de TeleGeography (CC BY-NC-SA 4.0), fourni avec Live Track Internet, chaque couche avec sa propre case sur la carte, décochée tant que vous ne la cochez pas. Pannes : les fiches de panne de Cloudflare Radar, un marqueur pour chaque panne en cours, placé dans le pays ou la région qu'elle indique, et en rouge tout câble qu'une panne nomme. Pour les pannes, il vous faut votre propre jeton d'API Cloudflare, gratuit. Créez-le sur {token_url} : choisissez un jeton personnalisé (« Custom token ») et donnez-lui l'autorisation Account > Radar > Read. Home Assistant s'en sert pour demander la liste des pannes à Cloudflare toutes les 15 minutes. Laissez le jeton vide pour n'afficher que les câbles ; vous pourrez en ajouter un plus tard. Les données de Cloudflare Radar sont sous licence CC BY-NC 4.0 ; les deux sources sont pour un usage non commercial. Cette traduction a été écrite sans locuteur natif : signalez erreurs et suggestions sur {issues_url}.",
+        "description": "Affiche les pannes d'internet, les câbles sous-marins et les liaisons terrestres sur la carte Live Track. Câbles : chaque câble sous-marin et chaque point d'atterrissement du jeu de données de Tristan Hotham tiré des données de câbles de TeleGeography (CC BY-NC-SA 4.0), fourni avec Live Track Internet, chaque couche avec sa propre case sur la carte, décochée tant que vous ne la cochez pas. Liaisons terrestres : les liaisons en fibre et en faisceaux hertziens entre localités que recensent les Broadband Maps de l'UIT, tracées en ligne droite de nœud à nœud et téléchargées auprès de l'UIT une fois par semaine, elles aussi décochées tant que vous ne les cochez pas. Pannes : les fiches de panne de Cloudflare Radar, un marqueur pour chaque panne en cours, placé dans le pays ou la région qu'elle indique, et en rouge tout câble qu'une panne nomme. Pour les pannes, il vous faut votre propre jeton d'API Cloudflare, gratuit. Créez-le sur {token_url} : choisissez un jeton personnalisé (« Custom token ») et donnez-lui l'autorisation Account > Radar > Read. Home Assistant s'en sert pour demander la liste des pannes à Cloudflare toutes les 15 minutes. Laissez le jeton vide pour n'afficher que les câbles et les liaisons ; vous pourrez en ajouter un plus tard. Les données de Cloudflare Radar sont sous licence CC BY-NC 4.0 ; les trois sources sont pour un usage non commercial. Cette traduction a été écrite sans locuteur natif : signalez erreurs et suggestions sur {issues_url}.",
         "data": {
-          "api_token": "Jeton d'API Cloudflare"
+          "api_token": "Jeton d'API Cloudflare",
+          "itu_links": "Liaisons terrestres de l'UIT"
         },
         "data_description": {
-          "api_token": "Facultatif : sans lui, les câbles seuls. Conservé dans Home Assistant et envoyé uniquement à Cloudflare."
+          "api_token": "Facultatif : sans lui, les câbles et les liaisons seuls. Conservé dans Home Assistant et envoyé uniquement à Cloudflare.",
+          "itu_links": "Téléchargées auprès de l'UIT une fois par semaine, environ 1 Mo. Décochez pour vous passer du téléchargement et de la couche."
         }
       },
       "reauth_confirm": {
@@ -19,10 +21,14 @@
         }
       },
       "reconfigure": {
-        "title": "Changer le jeton d'API Cloudflare",
-        "description": "Saisissez un jeton d'API Cloudflare (un jeton personnalisé avec Account > Radar > Read, créé sur {token_url}). Laissez le champ vide pour garder le jeton actuel. Pour retirer le jeton, supprimez Live Track Internet et ajoutez-le de nouveau sans jeton.",
+        "title": "Paramètres de Live Track Internet",
+        "description": "Saisissez un jeton d'API Cloudflare (un jeton personnalisé avec Account > Radar > Read, créé sur {token_url}). Laissez le champ vide pour garder le jeton actuel. Pour retirer le jeton, supprimez Live Track Internet et ajoutez-le de nouveau sans jeton. La case ci-dessous active ou désactive le téléchargement hebdomadaire des liaisons terrestres auprès de l'UIT.",
         "data": {
-          "api_token": "Jeton d'API Cloudflare"
+          "api_token": "Jeton d'API Cloudflare",
+          "itu_links": "Liaisons terrestres de l'UIT"
+        },
+        "data_description": {
+          "itu_links": "Téléchargées auprès de l'UIT une fois par semaine, environ 1 Mo. Décochez pour vous passer du téléchargement et de la couche."
         }
       }
     },
@@ -51,6 +57,9 @@
       },
       "landing_points": {
         "name": "Points d'atterrissement"
+      },
+      "terrestrial_links": {
+        "name": "Liaisons terrestres"
       }
     }
   }

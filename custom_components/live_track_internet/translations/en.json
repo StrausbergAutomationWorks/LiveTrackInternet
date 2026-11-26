@@ -3,12 +3,14 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Puts internet outages and submarine cables on the Live Track map. Cables: every submarine cable and landing point in Tristan Hotham's dataset of TeleGeography's cable data (CC BY-NC-SA 4.0), shipped with Live Track Internet, each layer with its own box on the map, off until you tick it. Outages: Cloudflare Radar's outage records, one marker for each open outage, placed in the country or region it names, and any cable an outage names drawn in red. Outages need your own free Cloudflare API token. Make one at {token_url}: choose a Custom token and give it the permission Account > Radar > Read. Home Assistant asks Cloudflare for the outage list every 15 minutes with it. Leave the token empty to show the cables alone; you can add one later. Cloudflare Radar's data is licensed CC BY-NC 4.0; both sources are for non-commercial use. Please report mistakes in this dialog, and suggestions of what to add, at {issues_url}.",
+        "description": "Puts internet outages, submarine cables and terrestrial links on the Live Track map. Cables: every submarine cable and landing point in Tristan Hotham's dataset of TeleGeography's cable data (CC BY-NC-SA 4.0), shipped with Live Track Internet, each layer with its own box on the map, off until you tick it. Terrestrial links: the fibre and microwave links between towns that ITU's Broadband Maps record, drawn straight from node to node and fetched from ITU once a week, also off until you tick them. Outages: Cloudflare Radar's outage records, one marker for each open outage, placed in the country or region it names, and any cable an outage names drawn in red. Outages need your own free Cloudflare API token. Make one at {token_url}: choose a Custom token and give it the permission Account > Radar > Read. Home Assistant asks Cloudflare for the outage list every 15 minutes with it. Leave the token empty to show the cables and links alone; you can add one later. Cloudflare Radar's data is licensed CC BY-NC 4.0; all three sources are for non-commercial use. Please report mistakes in this dialog, and suggestions of what to add, at {issues_url}.",
         "data": {
-          "api_token": "Cloudflare API token"
+          "api_token": "Cloudflare API token",
+          "itu_links": "Terrestrial links from ITU"
         },
         "data_description": {
-          "api_token": "Optional: without it, the cables alone. Kept in Home Assistant and sent only to Cloudflare."
+          "api_token": "Optional: without it, the cables and links alone. Kept in Home Assistant and sent only to Cloudflare.",
+          "itu_links": "Fetched from ITU once a week, about 1 MB. Untick to skip the fetch and the layer."
         }
       },
       "reauth_confirm": {
@@ -19,10 +21,14 @@
         }
       },
       "reconfigure": {
-        "title": "Change the Cloudflare API token",
-        "description": "Enter a Cloudflare API token (a Custom token with Account > Radar > Read, made at {token_url}). Leave the field empty to keep the token you have now. To remove the token, delete Live Track Internet and add it again without one.",
+        "title": "Live Track Internet settings",
+        "description": "Enter a Cloudflare API token (a Custom token with Account > Radar > Read, made at {token_url}). Leave the field empty to keep the token you have now. To remove the token, delete Live Track Internet and add it again without one. The box below switches the weekly fetch of terrestrial links from ITU on or off.",
         "data": {
-          "api_token": "Cloudflare API token"
+          "api_token": "Cloudflare API token",
+          "itu_links": "Terrestrial links from ITU"
+        },
+        "data_description": {
+          "itu_links": "Fetched from ITU once a week, about 1 MB. Untick to skip the fetch and the layer."
         }
       }
     },
@@ -51,6 +57,9 @@
       },
       "landing_points": {
         "name": "Landing points"
+      },
+      "terrestrial_links": {
+        "name": "Terrestrial links"
       }
     }
   }

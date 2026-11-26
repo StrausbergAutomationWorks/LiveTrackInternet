@@ -8,7 +8,7 @@ from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-from .const import CONF_API_TOKEN, DOMAIN, VERSION
+from .const import CONF_API_TOKEN, DOMAIN, LINKS_FETCHER, VERSION
 
 
 async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigEntry) -> dict[str, Any]:
@@ -26,4 +26,5 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigE
         "reason": data.get("reason"),
         "last_success": data.get("last_success"),
         "poll_s": coordinator.update_interval.total_seconds() if coordinator and coordinator.update_interval else None,
+        "terrestrial_links": fetcher.state() if (fetcher := hass.data.get(DOMAIN, {}).get(LINKS_FETCHER)) else None,
     }

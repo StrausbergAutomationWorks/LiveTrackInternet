@@ -1,4 +1,5 @@
-"""The sensors: the outage count (SAW SSOT 5.6) and the three cable publishers (SSOT section 2; contract D12, D19).
+"""The sensors: the outage count (SAW SSOT 5.6), the three cable publishers (SSOT section 2; contract D12, D19) and
+the terrestrial links publisher (SSOT 7.4; D12), the last only while the setup option is on.
 
 Each is one per entry, so each KEEPS a unique_id and a device (06_MAP_CONTRACT.md D1). The entity ids are set before
 the entities are added, which Home Assistant takes as the suggested id at FIRST registration only (Home Assistant
@@ -18,9 +19,10 @@ from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from . import cables
-from .const import ATTRIBUTION, DOMAIN, VERSION
+from . import cables, itu
+from .const import ATTRIBUTION, DOMAIN, LINKS_FETCHER, VERSION
 from .coordinator import OutageCoordinator
+from .terrestrial import LinksFetcher
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
@@ -30,6 +32,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     entities: list[SensorEntity] = [AllCables(cd, data["shapes_url"], entry), LandingPoints(cd, entry)]
     if coordinator is not None:
         entities += [OutageCount(coordinator, entry), CablesInTrouble(coordinator, cd, entry)]
+    fetcher: LinksFetcher | None = data.get(LINKS_FETCHER)
+    if fetcher is not None:
+        entities.append(TerrestrialLinks(fetcher, entry))
     async_add_entities(entities)
 
 
@@ -44,6 +49,13 @@ def _cables_device(entry: ConfigEntry) -> DeviceInfo:
                       manufacturer="Tristan Hotham, from TeleGeography data", model="The internet's seabed (2026)",
                       sw_version=VERSION, entry_type=DeviceEntryType.SERVICE,
                       configuration_url="https://doi.org/10.5281/zenodo.23856607")
+
+
+def _itu_device(entry: ConfigEntry) -> DeviceInfo:
+    return DeviceInfo(identifiers={(DOMAIN, f"{entry.entry_id}_itu")}, name="ITU Broadband Maps",
+                      manufacturer="International Telecommunication Union (ITU)",
+                      model="Infrastructure Connectivity Map, terrestrial links", sw_version=VERSION,
+                      entry_type=DeviceEntryType.SERVICE, configuration_url="https://bbmaps.itu.int")
 
 
 class OutageCount(CoordinatorEntity[OutageCoordinator], SensorEntity):
@@ -167,3 +179,39 @@ class CablesInTrouble(CoordinatorEntity[OutageCoordinator], SensorEntity):
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         return cables.trouble_attrs(self._polygons())
+
+
+class TerrestrialLinks(SensorEntity):
+    """ITU's terrestrial links as lines from the file this install builds weekly (SSOT 7.4; D12), off until ticked,
+    not clickable. Unavailable until the first good fetch; after that the last good file stays, however old."""
+
+    _attr_has_entity_name = True
+    _attr_translation_key = "terrestrial_links"
+    _attr_should_poll = False
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_attribution = itu.ATTRIBUTION
+    _attr_icon = "mdi:vector-polyline"
+    # D12: zones and styles unrecorded (A7); the rest changes at most weekly and adds nothing to the history.
+    _unrecorded_attributes = frozenset({"shapes_url", "zones", "styles", "shape_order", "layer_default",
+                                        "last_success", "links_total"})
+
+    def __init__(self, fetcher: LinksFetcher, entry: ConfigEntry) -> None:
+        self._fetcher = fetcher
+        self._attr_unique_id = f"{DOMAIN}_terrestrial_links"
+        self.entity_id = f"sensor.{DOMAIN}_terrestrial_links"
+        self._attr_device_info = _itu_device(entry)
+
+    async def async_added_to_hass(self) -> None:
+        self.async_on_remove(self._fetcher.add_listener(self.async_write_ha_state))
+
+    @property
+    def available(self) -> bool:
+        return self._fetcher.links is not None
+
+    @property
+    def native_value(self) -> int | None:
+        return self._fetcher.links.links_drawn if self._fetcher.links else None
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        return itu.publisher_attrs(self._fetcher.links) if self._fetcher.links else {}

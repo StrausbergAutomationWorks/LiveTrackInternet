@@ -3,12 +3,14 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Zet internetstoringen en onderzeese kabels op de Live Track-kaart. Kabels: elke onderzeese kabel en elk aanlandingspunt uit de dataset van Tristan Hotham met de kabelgegevens van TeleGeography (CC BY-NC-SA 4.0), meegeleverd met Live Track Internet, elke laag met een eigen vakje op de kaart, uit tot je het aanvinkt. Storingen: de storingsmeldingen van Cloudflare Radar, één markering per lopende storing, geplaatst in het land of de regio die erin wordt genoemd, en in rood elke kabel die een storing noemt. Voor de storingen heb je je eigen gratis Cloudflare-API-token nodig. Maak er een aan op {token_url}: kies een aangepast token ('Custom token') en geef het de machtiging Account > Radar > Read. Home Assistant vraagt daarmee elke 15 minuten de storingslijst op bij Cloudflare. Laat het token leeg om alleen de kabels te tonen; je kunt er later een toevoegen. De gegevens van Cloudflare Radar vallen onder de licentie CC BY-NC 4.0; beide bronnen zijn voor niet-commercieel gebruik. Deze vertaling is geschreven zonder moedertaalspreker: meld fouten en suggesties op {issues_url}.",
+        "description": "Zet internetstoringen, onderzeese kabels en verbindingen over land op de Live Track-kaart. Kabels: elke onderzeese kabel en elk aanlandingspunt uit de dataset van Tristan Hotham met de kabelgegevens van TeleGeography (CC BY-NC-SA 4.0), meegeleverd met Live Track Internet, elke laag met een eigen vakje op de kaart, uit tot je het aanvinkt. Verbindingen over land: de glasvezel- en straalverbindingen tussen plaatsen die de Broadband Maps van de ITU vastleggen, in een rechte lijn van knooppunt tot knooppunt getekend en eens per week bij de ITU opgehaald, ook uit tot je ze aanvinkt. Storingen: de storingsmeldingen van Cloudflare Radar, één markering per lopende storing, geplaatst in het land of de regio die erin wordt genoemd, en in rood elke kabel die een storing noemt. Voor de storingen heb je je eigen gratis Cloudflare-API-token nodig. Maak er een aan op {token_url}: kies een aangepast token ('Custom token') en geef het de machtiging Account > Radar > Read. Home Assistant vraagt daarmee elke 15 minuten de storingslijst op bij Cloudflare. Laat het token leeg om alleen de kabels en verbindingen te tonen; je kunt er later een toevoegen. De gegevens van Cloudflare Radar vallen onder de licentie CC BY-NC 4.0; alle drie de bronnen zijn voor niet-commercieel gebruik. Deze vertaling is geschreven zonder moedertaalspreker: meld fouten en suggesties op {issues_url}.",
         "data": {
-          "api_token": "Cloudflare-API-token"
+          "api_token": "Cloudflare-API-token",
+          "itu_links": "Verbindingen over land van de ITU"
         },
         "data_description": {
-          "api_token": "Optioneel: zonder token alleen de kabels. Wordt bewaard in Home Assistant en alleen naar Cloudflare gestuurd."
+          "api_token": "Optioneel: zonder token alleen de kabels en verbindingen. Wordt bewaard in Home Assistant en alleen naar Cloudflare gestuurd.",
+          "itu_links": "Eens per week bij de ITU opgehaald, ongeveer 1 MB. Vink uit om het ophalen en de laag over te slaan."
         }
       },
       "reauth_confirm": {
@@ -19,10 +21,14 @@
         }
       },
       "reconfigure": {
-        "title": "Cloudflare-API-token wijzigen",
-        "description": "Vul een Cloudflare-API-token in (een aangepast token met Account > Radar > Read, aangemaakt op {token_url}). Laat het veld leeg om het huidige token te houden. Om het token te verwijderen, verwijder je Live Track Internet en voeg je het opnieuw toe zonder token.",
+        "title": "Instellingen van Live Track Internet",
+        "description": "Vul een Cloudflare-API-token in (een aangepast token met Account > Radar > Read, aangemaakt op {token_url}). Laat het veld leeg om het huidige token te houden. Om het token te verwijderen, verwijder je Live Track Internet en voeg je het opnieuw toe zonder token. Het vakje hieronder zet het wekelijks ophalen van de verbindingen over land bij de ITU aan of uit.",
         "data": {
-          "api_token": "Cloudflare-API-token"
+          "api_token": "Cloudflare-API-token",
+          "itu_links": "Verbindingen over land van de ITU"
+        },
+        "data_description": {
+          "itu_links": "Eens per week bij de ITU opgehaald, ongeveer 1 MB. Vink uit om het ophalen en de laag over te slaan."
         }
       }
     },
@@ -51,6 +57,9 @@
       },
       "landing_points": {
         "name": "Aanlandingspunten"
+      },
+      "terrestrial_links": {
+        "name": "Verbindingen over land"
       }
     }
   }

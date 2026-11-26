@@ -3,12 +3,14 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Mostra le interruzioni di internet e i cavi sottomarini sulla mappa di Live Track. Cavi: ogni cavo sottomarino e ogni punto di approdo del set di dati di Tristan Hotham sui dati dei cavi di TeleGeography (CC BY-NC-SA 4.0), fornito con Live Track Internet, ogni livello con la sua casella sulla mappa, spento finché non la spunti. Interruzioni: le schede delle interruzioni di Cloudflare Radar, un indicatore per ogni interruzione in corso, posto nel paese o nella regione che indica, e in rosso ogni cavo nominato da un'interruzione. Per le interruzioni ti serve un tuo token API di Cloudflare, gratuito. Crealo su {token_url}: scegli un token personalizzato («Custom token») e dagli il permesso Account > Radar > Read. Con esso Home Assistant chiede a Cloudflare l'elenco delle interruzioni ogni 15 minuti. Lascia vuoto il token per mostrare solo i cavi; potrai aggiungerne uno in seguito. I dati di Cloudflare Radar sono distribuiti con licenza CC BY-NC 4.0; entrambe le fonti sono per uso non commerciale. Questa traduzione è stata scritta senza un madrelingua: segnalaci errori e suggerimenti su {issues_url}.",
+        "description": "Mostra le interruzioni di internet, i cavi sottomarini e i collegamenti terrestri sulla mappa di Live Track. Cavi: ogni cavo sottomarino e ogni punto di approdo del set di dati di Tristan Hotham sui dati dei cavi di TeleGeography (CC BY-NC-SA 4.0), fornito con Live Track Internet, ogni livello con la sua casella sulla mappa, spento finché non la spunti. Collegamenti terrestri: i collegamenti in fibra e in ponte radio tra località registrati nelle Broadband Maps dell'UIT, tracciati in linea retta da nodo a nodo e scaricati dall'UIT una volta alla settimana, anch'essi spenti finché non li spunti. Interruzioni: le schede delle interruzioni di Cloudflare Radar, un indicatore per ogni interruzione in corso, posto nel paese o nella regione che indica, e in rosso ogni cavo nominato da un'interruzione. Per le interruzioni ti serve un tuo token API di Cloudflare, gratuito. Crealo su {token_url}: scegli un token personalizzato («Custom token») e dagli il permesso Account > Radar > Read. Con esso Home Assistant chiede a Cloudflare l'elenco delle interruzioni ogni 15 minuti. Lascia vuoto il token per mostrare solo i cavi e i collegamenti; potrai aggiungerne uno in seguito. I dati di Cloudflare Radar sono distribuiti con licenza CC BY-NC 4.0; tutte e tre le fonti sono per uso non commerciale. Questa traduzione è stata scritta senza un madrelingua: segnalaci errori e suggerimenti su {issues_url}.",
         "data": {
-          "api_token": "Token API di Cloudflare"
+          "api_token": "Token API di Cloudflare",
+          "itu_links": "Collegamenti terrestri dall'UIT"
         },
         "data_description": {
-          "api_token": "Facoltativo: senza, solo i cavi. Conservato in Home Assistant e inviato solo a Cloudflare."
+          "api_token": "Facoltativo: senza, solo i cavi e i collegamenti. Conservato in Home Assistant e inviato solo a Cloudflare.",
+          "itu_links": "Scaricati dall'UIT una volta alla settimana, circa 1 MB. Togli la spunta per saltare lo scaricamento e il livello."
         }
       },
       "reauth_confirm": {
@@ -19,10 +21,14 @@
         }
       },
       "reconfigure": {
-        "title": "Cambia il token API di Cloudflare",
-        "description": "Inserisci un token API di Cloudflare (un token personalizzato con Account > Radar > Read, creato su {token_url}). Lascia vuoto il campo per tenere il token attuale. Per togliere il token, elimina Live Track Internet e aggiungilo di nuovo senza token.",
+        "title": "Impostazioni di Live Track Internet",
+        "description": "Inserisci un token API di Cloudflare (un token personalizzato con Account > Radar > Read, creato su {token_url}). Lascia vuoto il campo per tenere il token attuale. Per togliere il token, elimina Live Track Internet e aggiungilo di nuovo senza token. La casella qui sotto attiva o disattiva lo scaricamento settimanale dei collegamenti terrestri dall'UIT.",
         "data": {
-          "api_token": "Token API di Cloudflare"
+          "api_token": "Token API di Cloudflare",
+          "itu_links": "Collegamenti terrestri dall'UIT"
+        },
+        "data_description": {
+          "itu_links": "Scaricati dall'UIT una volta alla settimana, circa 1 MB. Togli la spunta per saltare lo scaricamento e il livello."
         }
       }
     },
@@ -51,6 +57,9 @@
       },
       "landing_points": {
         "name": "Punti di approdo"
+      },
+      "terrestrial_links": {
+        "name": "Collegamenti terrestri"
       }
     }
   }

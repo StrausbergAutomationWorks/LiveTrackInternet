@@ -4,9 +4,13 @@ from __future__ import annotations
 
 DOMAIN = "live_track_internet"
 NAME = "Live Track Internet"
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 CONF_API_TOKEN = "api_token"
+# The weekly fetch of ITU's terrestrial links (SSOT 7.6 item 6): on by default; an entry without the key is on.
+CONF_ITU_LINKS = "itu_links"
+DEFAULT_ITU_LINKS = True
+LINKS_FETCHER = "links_fetcher"    # hass.data[DOMAIN] key: the one entry's fetcher (single_config_entry)
 
 RADAR_BASE = "https://api.cloudflare.com/client/v4/radar/"
 TOKEN_URL = "https://dash.cloudflare.com/profile/api-tokens"

@@ -3,12 +3,14 @@
     "step": {
       "user": {
         "title": "Live Track Internet",
-        "description": "Muestra los cortes de internet y los cables submarinos en el mapa de Live Track. Cables: todos los cables submarinos y puntos de amarre del conjunto de datos de Tristan Hotham sobre los datos de cables de TeleGeography (CC BY-NC-SA 4.0), incluido con Live Track Internet, cada capa con su propia casilla en el mapa, desactivada hasta que la marques. Cortes: los registros de cortes de Cloudflare Radar, un marcador por cada corte en curso, situado en el país o la región que nombra, y en rojo cualquier cable que nombre un corte. Para los cortes necesitas tu propio token de API de Cloudflare, gratuito. Créalo en {token_url}: elige un token personalizado («Custom token») y dale el permiso Account > Radar > Read. Con él, Home Assistant pide a Cloudflare la lista de cortes cada 15 minutos. Deja el token vacío para mostrar solo los cables; puedes añadir uno más adelante. Los datos de Cloudflare Radar tienen licencia CC BY-NC 4.0; ambas fuentes son para uso no comercial. Esta traducción se escribió sin un hablante nativo: avísanos de errores y sugerencias en {issues_url}.",
+        "description": "Muestra los cortes de internet, los cables submarinos y los enlaces terrestres en el mapa de Live Track. Cables: todos los cables submarinos y puntos de amarre del conjunto de datos de Tristan Hotham sobre los datos de cables de TeleGeography (CC BY-NC-SA 4.0), incluido con Live Track Internet, cada capa con su propia casilla en el mapa, desactivada hasta que la marques. Enlaces terrestres: los enlaces de fibra y de microondas entre localidades que registran los Broadband Maps de la UIT, trazados en línea recta de nodo a nodo y descargados de la UIT una vez por semana, también desactivados hasta que los marques. Cortes: los registros de cortes de Cloudflare Radar, un marcador por cada corte en curso, situado en el país o la región que nombra, y en rojo cualquier cable que nombre un corte. Para los cortes necesitas tu propio token de API de Cloudflare, gratuito. Créalo en {token_url}: elige un token personalizado («Custom token») y dale el permiso Account > Radar > Read. Con él, Home Assistant pide a Cloudflare la lista de cortes cada 15 minutos. Deja el token vacío para mostrar solo los cables y los enlaces; puedes añadir uno más adelante. Los datos de Cloudflare Radar tienen licencia CC BY-NC 4.0; las tres fuentes son para uso no comercial. Esta traducción se escribió sin un hablante nativo: avísanos de errores y sugerencias en {issues_url}.",
         "data": {
-          "api_token": "Token de API de Cloudflare"
+          "api_token": "Token de API de Cloudflare",
+          "itu_links": "Enlaces terrestres de la UIT"
         },
         "data_description": {
-          "api_token": "Opcional: sin él, solo los cables. Se guarda en Home Assistant y solo se envía a Cloudflare."
+          "api_token": "Opcional: sin él, solo los cables y los enlaces. Se guarda en Home Assistant y solo se envía a Cloudflare.",
+          "itu_links": "Se descargan de la UIT una vez por semana, alrededor de 1 MB. Desmárcala para omitir la descarga y la capa."
         }
       },
       "reauth_confirm": {
@@ -19,10 +21,14 @@
         }
       },
       "reconfigure": {
-        "title": "Cambiar el token de API de Cloudflare",
-        "description": "Introduce un token de API de Cloudflare (un token personalizado con Account > Radar > Read, creado en {token_url}). Deja el campo vacío para conservar el token actual. Para quitar el token, elimina Live Track Internet y vuelve a añadirlo sin él.",
+        "title": "Ajustes de Live Track Internet",
+        "description": "Introduce un token de API de Cloudflare (un token personalizado con Account > Radar > Read, creado en {token_url}). Deja el campo vacío para conservar el token actual. Para quitar el token, elimina Live Track Internet y vuelve a añadirlo sin él. La casilla de abajo activa o desactiva la descarga semanal de los enlaces terrestres de la UIT.",
         "data": {
-          "api_token": "Token de API de Cloudflare"
+          "api_token": "Token de API de Cloudflare",
+          "itu_links": "Enlaces terrestres de la UIT"
+        },
+        "data_description": {
+          "itu_links": "Se descargan de la UIT una vez por semana, alrededor de 1 MB. Desmárcala para omitir la descarga y la capa."
         }
       }
     },
@@ -51,6 +57,9 @@
       },
       "landing_points": {
         "name": "Puntos de amarre"
+      },
+      "terrestrial_links": {
+        "name": "Enlaces terrestres"
       }
     }
   }
