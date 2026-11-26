@@ -150,10 +150,6 @@ Alles is gratis en open source. Niets wordt achtergehouden voor sponsors.
   hand kopiëren.
 * **Internettoegang** voor Home Assistant: de storingen en de verbindingen over
   land komen van openbare diensten.
-* **Optioneel: auto-entities** uit de Marktplaats, om de markeringen van de
-  storingen op de kaart te zetten (zie
-  [De kaart op een dashboard zetten](#de-kaart-op-een-dashboard-zetten)). De
-  lagen van de kabels en verbindingen verschijnen ook zonder.
 * Niets te betalen en geen account nodig voor de kabels en verbindingen. Het
   gratis Cloudflare-token hierboven is optioneel.
 * Home Assistant installeert het Python-pakket dat het nodig heeft
@@ -279,33 +275,6 @@ toe te voegen.
 3. Plak dit en kies **Bewaar**:
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-De lagen van de kabels en verbindingen verschijnen vanzelf. De markeringen van
-de storingen komen via het filter hierboven, dat
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) uit de
-Marktplaats nodig heeft. Met andere Live Track-modules geïnstalleerd voeg je
-voor elk van hun bronnen nog een filter `- domain: geo_location` toe
-(`live_track_aircraft`, `live_track_ships` enzovoort).
-
-**Zonder auto-entities:** LiveTrackMapCard kan met `entity_filter` zelf kiezen
-wat hij toont. Plak in plaats daarvan dit; er hoeft niets meer geïnstalleerd
-te worden:
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -318,6 +287,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+De lagen van de kabels en verbindingen verschijnen vanzelf. De markeringen van
+de storingen komen via het filter hierboven.
 
 Andere Live Track-modules gaan op dezelfde manier in `entity_filter`: nog een
 regel `- domain: geo_location` voor elke bron.

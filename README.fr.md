@@ -153,10 +153,6 @@ Tout est gratuit et libre. Rien n'est réservé aux sponsors.
   main.
 * **Un accès à Internet** pour Home Assistant : les pannes et les liaisons
   terrestres viennent de services publics.
-* **Facultatif : auto-entities** depuis le Marketplace, pour mettre les
-  marqueurs des pannes sur la carte (voir
-  [Mettre la carte sur un tableau de bord](#mettre-la-carte-sur-un-tableau-de-bord)).
-  Les couches des câbles et des liaisons apparaissent sans lui.
 * Rien à payer et aucun compte nécessaire pour les câbles et les liaisons. Le
   jeton Cloudflare gratuit ci-dessus est facultatif.
 * Home Assistant installe tout seul le paquet Python dont il a besoin
@@ -284,32 +280,6 @@ ressource à ajouter.
 3. Collez ceci, et choisissez **Enregistrer** :
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-Les couches des câbles et des liaisons apparaissent d'elles-mêmes. Les
-marqueurs des pannes passent par le filtre ci-dessus, qui nécessite
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) depuis
-le Marketplace. Si d'autres modules Live Track sont installés, ajoutez un
-filtre `- domain: geo_location` de plus pour chacune de leurs sources
-(`live_track_aircraft`, `live_track_ships` et ainsi de suite).
-
-**Sans auto-entities :** LiveTrackMapCard peut choisir elle-même ce qu'elle
-affiche, avec `entity_filter`. Collez plutôt ceci ; rien d'autre à installer :
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -322,6 +292,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+Les couches des câbles et des liaisons apparaissent d'elles-mêmes. Les marqueurs
+des pannes passent par le filtre ci-dessus.
 
 Les autres modules Live Track vont dans `entity_filter` de la même façon : une
 règle `- domain: geo_location` de plus pour chaque source.

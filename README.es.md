@@ -147,10 +147,6 @@ Todo es gratuito y de código abierto. No se reserva nada para patrocinadores.
   actualizarlo de forma sencilla. Sin él puedes copiar los archivos a mano.
 * **Acceso a internet** para Home Assistant: los cortes y los enlaces
   terrestres vienen de servicios públicos.
-* **Opcional: auto-entities** desde el Marketplace, para poner en el mapa los
-  marcadores de los cortes (consulta
-  [Poner el mapa en un panel](#poner-el-mapa-en-un-panel)). Las capas de los
-  cables y los enlaces aparecen sin él.
 * Nada que pagar y ninguna cuenta necesaria para los cables y los enlaces. El
   token gratuito de Cloudflare de arriba es opcional.
 * Home Assistant instala por sí mismo el paquete de Python que necesita
@@ -277,33 +273,6 @@ añadir.
 3. Pega esto y elige **Guardar**:
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-Las capas de los cables y los enlaces aparecen por sí solas. Los marcadores de
-los cortes llegan por el filtro de arriba, que necesita
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) desde el
-Marketplace. Si tienes instalados otros módulos de Live Track, añade un filtro
-`- domain: geo_location` más por cada una de sus fuentes
-(`live_track_aircraft`, `live_track_ships`, etcétera).
-
-**Sin auto-entities:** LiveTrackMapCard puede elegir por sí misma lo que
-muestra, con `entity_filter`. Pega esto en su lugar; no hace falta instalar
-nada más:
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -316,6 +285,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+Las capas de los cables y los enlaces aparecen por sí solas. Los marcadores de
+los cortes llegan por el filtro de arriba.
 
 Los demás módulos de Live Track van en `entity_filter` del mismo modo: una
 regla `- domain: geo_location` más por cada fuente.

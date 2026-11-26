@@ -144,10 +144,6 @@ Live Track — це набір інтеграцій для Home Assistant, по 
   встановлювати й оновлювати. Без нього можна скопіювати файли вручну.
 * **Доступ до інтернету** для Home Assistant: збої й наземні лінії надходять
   від публічних сервісів.
-* **Необов'язково: auto-entities** з магазину, щоб показати позначки збоїв на
-  карті (див.
-  [Як додати карту на інформаційну панель](#як-додати-карту-на-інформаційну-панель)).
-  Шари кабелів і ліній з'являються й без нього.
 * Нічого платити й жодного облікового запису для кабелів і ліній не потрібно.
   Безкоштовний токен Cloudflare вище — необов'язковий.
 * Home Assistant сам установлює потрібний пакет Python (`saw-livetrack`), коли
@@ -271,33 +267,6 @@ Live Track Internet**: нічого не треба завантажувати, 
 3. Вставте це й виберіть **Зберегти**:
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-Шари кабелів і ліній з'являються самі. Позначки збоїв надходять через фільтр
-вище, для якого потрібен
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) з
-магазину. Якщо встановлено інші модулі Live Track, додайте ще один фільтр
-`- domain: geo_location` для кожного з їхніх джерел
-(`live_track_aircraft`, `live_track_ships` тощо).
-
-**Без auto-entities:** LiveTrackMapCard може сама вибирати, що показувати, за
-допомогою `entity_filter`. Вставте натомість це; більше нічого встановлювати не
-треба:
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -310,6 +279,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+Шари кабелів і ліній з'являються самі. Позначки збоїв надходять через фільтр
+вище.
 
 Інші модулі Live Track додаються в `entity_filter` так само: ще одне правило
 `- domain: geo_location` для кожного джерела.

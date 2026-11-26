@@ -151,10 +151,6 @@ Tutto è gratuito e open source. Niente è riservato agli sponsor.
   aggiornarlo nel modo più semplice. Senza, puoi copiare i file a mano.
 * **Accesso a internet** per Home Assistant: le interruzioni e i collegamenti
   terrestri arrivano da servizi pubblici.
-* **Facoltativo: auto-entities** dal Marketplace, per mettere sulla mappa gli
-  indicatori delle interruzioni (vedi
-  [Mettere la mappa su una plancia](#mettere-la-mappa-su-una-plancia)). I
-  livelli dei cavi e dei collegamenti compaiono anche senza.
 * Niente da pagare e nessun account necessario per i cavi e i collegamenti.
   Il token gratuito di Cloudflare qui sopra è facoltativo.
 * Home Assistant installa da solo il pacchetto Python che gli serve
@@ -278,32 +274,6 @@ aggiungere.
 3. Incolla questo e scegli **Salva**:
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-I livelli dei cavi e dei collegamenti compaiono da soli. Gli indicatori delle
-interruzioni arrivano tramite il filtro qui sopra, che richiede
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) dal
-Marketplace. Se hai installato altri moduli di Live Track, aggiungi un filtro
-`- domain: geo_location` in più per ciascuna delle loro fonti
-(`live_track_aircraft`, `live_track_ships` e così via).
-
-**Senza auto-entities:** LiveTrackMapCard può scegliere da sola cosa mostrare,
-con `entity_filter`. Incolla invece questo; non serve installare altro:
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -316,6 +286,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+I livelli dei cavi e dei collegamenti compaiono da soli. Gli indicatori delle
+interruzioni arrivano tramite il filtro qui sopra.
 
 Gli altri moduli di Live Track vanno in `entity_filter` allo stesso modo: una
 regola `- domain: geo_location` in più per ogni fonte.

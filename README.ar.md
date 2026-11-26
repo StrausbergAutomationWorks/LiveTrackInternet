@@ -143,9 +143,6 @@ Live Track مجموعة من تكاملات Home Assistant، تكامل لكل �
   دونه يمكنك نسخ الملفات يدويًا.
 * **وصول إلى الإنترنت** لـ Home Assistant: الانقطاعات والوصلات البرية تأتي من
   خدمات عامة.
-* **اختياري: auto-entities** من Marketplace، لوضع علامات الانقطاعات على الخريطة
-  (انظر [وضع الخريطة على لوحة تحكم](#وضع-الخريطة-على-لوحة-تحكم)). تظهر طبقات
-  الكابلات والوصلات من دونه.
 * لا شيء تدفعه ولا حساب يلزم للكابلات والوصلات. رمز Cloudflare المجاني أعلاه
   اختياري.
 * يثبّت Home Assistant بنفسه حزمة Python التي يحتاجها (`saw-livetrack`) في أول
@@ -260,36 +257,6 @@ Internet**: لا شيء لتنزيله، ولا شيء لنسخه، ولا مو�
 </div>
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-<div dir="rtl">
-
-تظهر طبقات الكابلات والوصلات من تلقاء نفسها. وتأتي علامات الانقطاعات عبر
-المرشّح أعلاه، الذي يحتاج إلى
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) من
-Marketplace. إذا كانت وحدات Live Track أخرى مثبّتة، فأضف مرشّحًا آخر
-`- domain: geo_location` لكل مصدر من مصادرها
-(`live_track_aircraft` و`live_track_ships` وغيرهما).
-
-**من دون auto-entities:** يمكن لـ LiveTrackMapCard أن تختار بنفسها ما تعرضه،
-عبر `entity_filter`. الصق هذا بدلًا من ذلك؛ لا حاجة إلى تثبيت أي شيء آخر:
-
-</div>
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -304,6 +271,9 @@ entity_filter:
 ```
 
 <div dir="rtl">
+
+تظهر طبقات الكابلات والوصلات من تلقاء نفسها. وتأتي علامات الانقطاعات عبر المرشّح
+أعلاه.
 
 تدخل وحدات Live Track الأخرى في `entity_filter` بالطريقة نفسها: قاعدة أخرى
 `- domain: geo_location` لكل مصدر.

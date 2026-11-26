@@ -150,10 +150,6 @@ Alles ist kostenlos und quelloffen. Nichts wird für Sponsoren zurückgehalten.
   kopieren.
 * **Internetzugang** für Home Assistant: Die Ausfälle und die Landverbindungen
   kommen von öffentlichen Diensten.
-* **Optional: auto-entities** aus dem Marketplace, um die Ausfallmarkierungen
-  auf die Karte zu bringen (siehe
-  [Die Karte auf ein Dashboard bringen](#die-karte-auf-ein-dashboard-bringen)).
-  Die Kabel- und Verbindungsebenen erscheinen auch ohne.
 * Für die Kabel und Verbindungen nichts zu bezahlen und kein Konto nötig. Das
   kostenlose Cloudflare-Token oben ist optional.
 * Home Assistant installiert das nötige Python-Paket (`saw-livetrack`) beim
@@ -285,33 +281,6 @@ Ressource hinzuzufügen.
 3. Fügen Sie dies ein und wählen Sie **Speichern**:
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-Die Kabel- und Verbindungsebenen erscheinen von selbst. Die
-Ausfallmarkierungen kommen über den Filter oben, der
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities) aus dem
-Marketplace braucht. Sind andere Live-Track-Module installiert, fügen Sie für
-jede ihrer Quellen einen weiteren Filter `- domain: geo_location` hinzu
-(`live_track_aircraft`, `live_track_ships` und so weiter).
-
-**Ohne auto-entities:** LiveTrackMapCard kann mit `entity_filter` selbst
-auswählen, was sie zeigt. Fügen Sie stattdessen dies ein; weiter muss nichts
-installiert werden:
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -324,6 +293,9 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+Die Kabel- und Verbindungsebenen erscheinen von selbst. Die Ausfallmarkierungen
+kommen über den Filter oben.
 
 Andere Live-Track-Module kommen genauso in `entity_filter`: eine weitere Regel
 `- domain: geo_location` für jede Quelle.

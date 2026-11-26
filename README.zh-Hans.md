@@ -137,9 +137,6 @@ Live Track 是一组 Home Assistant 集成，每种移动的东西对应一个�
 * 你的 Home Assistant 中装有 **Marketplace**（HACS），便于安装和更新。没有
   它也可以手动复制文件。
 * Home Assistant 能**访问互联网**：中断和陆地链路来自公共服务。
-* **可选：Marketplace 中的 auto-entities**，用于把中断标记放到地图上
-  （见[把地图放到仪表盘上](#把地图放到仪表盘上)）。光缆和链路图层不需要它也会
-  显示。
 * 光缆和链路无需付费，也无需账户。上面的免费 Cloudflare 令牌是可选的。
 * 集成第一次加载时，Home Assistant 会自动安装它需要的 Python 包
   （`saw-livetrack`）。
@@ -249,30 +246,6 @@ Cloudflare 以中文显示页面，名称会不同。
 3. 粘贴以下内容，然后选择 **保存**：
 
 ```yaml
-type: custom:auto-entities
-card:
-  type: custom:live-track-map-card
-filter:
-  include:
-    - domain: geo_location
-      attributes:
-        source: live_track_internet
-      options:
-        display: attribute
-        attribute: marker_label
-  exclude:
-    - state: unavailable
-```
-
-光缆和链路图层会自动出现。中断标记通过上面的过滤器显示，这需要 Marketplace 中的
-[auto-entities](https://github.com/thomasloven/lovelace-auto-entities)。如果安装了
-其他 Live Track 模块，请为它们的每个数据源再添加一个 `- domain: geo_location`
-过滤器（`live_track_aircraft`、`live_track_ships` 等）。
-
-**不用 auto-entities：** LiveTrackMapCard 可以用 `entity_filter` 自己选择要显示
-的内容。改为粘贴以下内容；不需要再安装任何东西：
-
-```yaml
 type: custom:live-track-map-card
 entity_filter:
   include:
@@ -285,6 +258,8 @@ entity_filter:
   exclude:
     - state: unavailable
 ```
+
+光缆和链路图层会自动出现。中断标记通过上面的过滤器显示。
 
 其他 Live Track 模块也以同样方式放进 `entity_filter`：每个数据源再加一条
 `- domain: geo_location` 规则。
