@@ -62,5 +62,15 @@
         "name": "Verbindingen over land"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "Voeg de kaartkaart van Live Track toe aan je bronnen",
+      "description": "De bronnen van je dashboards zijn in YAML ingesteld, dus de kaartkaart kan niet automatisch worden geregistreerd. Voeg dit toe onder lovelace: resources: in configuration.yaml en herstart daarna:\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "De kaartkaart van Live Track is meer dan eens geregistreerd",
+      "description": "Deze dashboardbronnen laden de kaartkaart ook: {urls}. Er wordt er maar één gebruikt en de andere doen niets. Verwijder ze via Instellingen > Dashboards > Bronnen."
+    }
   }
 }

@@ -62,5 +62,15 @@
         "name": "Enlaces terrestres"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "Añade la tarjeta de mapa de Live Track a tus recursos",
+      "description": "Los recursos de tus paneles están definidos en YAML, así que la tarjeta de mapa no se puede registrar automáticamente. Añade esto bajo lovelace: resources: en configuration.yaml y reinicia:\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "La tarjeta de mapa de Live Track está registrada más de una vez",
+      "description": "Estos recursos de panel también cargan la tarjeta de mapa: {urls}. Solo se usa uno y los demás no hacen nada. Quítalos en Configuración > Paneles de control > Recursos."
+    }
   }
 }

@@ -1,0 +1,66 @@
+name: "Українська: пропозиція, проблема чи допомога"
+description: "Запропонуйте щось, повідомте про проблему або додайте щось із нашою допомогою. Уміти програмувати не потрібно."
+labels: ["lang: uk"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Дякуємо. Дайте відповідь на те, що можете, а решту залиште порожнім. Вам не потрібно нічого знати про програмування. Можна писати українською або будь-якою іншою мовою.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: "Про що йдеться?"
+      options:
+        - "Пропозиція: країна, джерело даних, функція"
+        - "Проблема: щось неправильно, бракує чогось або це важко зрозуміти"
+        - "Я хотів би щось додати з вашою допомогою"
+        - "Щось інше"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "Розкажіть нам"
+      description: "Що ви хотіли б, що сталося або що ви задумали."
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: "Де у світі?"
+      description: "Країна, регіон чи місто, якщо це важливо."
+  - type: textarea
+    id: source
+    attributes:
+      label: "Де опубліковано дані? (необов'язково)"
+      description: "Посилання на сторінку відкритих даних, публічний потік даних або сайт сервісу, якщо ви його знаєте."
+  - type: input
+    id: ha_version
+    attributes:
+      label: "Версія Home Assistant (якщо це проблема)"
+      description: "Її показано в Налаштування → Інформація."
+  - type: input
+    id: version
+    attributes:
+      label: "Версія цієї інтеграції (якщо це проблема)"
+      description: "Магазин (HACS) показує її поруч із назвою."
+  - type: input
+    id: language
+    attributes:
+      label: "Мова вашого Home Assistant"
+      description: "Лише якщо проблема у формулюванні чи перекладі."
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Повідомлення про помилки (необов'язково)"
+      description: "Налаштування → Система → Журнал сервера. Скопіюйте рядки, у яких згадано цю інтеграцію. Залиште порожнім, якщо не впевнені."
+      render: text
+  - type: dropdown
+    id: experience
+    attributes:
+      label: "Ви вже робили щось подібне? (необов'язково)"
+      description: "Щоб ми знали, скільки пояснювати. Будь-яка відповідь вітається."
+      options:
+        - "Ні, це вперше"
+        - "Трохи"
+        - "Так"

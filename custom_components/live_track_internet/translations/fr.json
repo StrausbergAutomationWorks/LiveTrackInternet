@@ -62,5 +62,15 @@
         "name": "Liaisons terrestres"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "Ajoutez la carte de carte Live Track à vos ressources",
+      "description": "Les ressources de vos tableaux de bord sont définies en YAML, la carte de carte ne peut donc pas être enregistrée automatiquement. Ajoutez ceci sous lovelace: resources: dans configuration.yaml, puis redémarrez :\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "La carte de carte Live Track est enregistrée plus d'une fois",
+      "description": "Ces ressources de tableau de bord chargent aussi la carte de carte : {urls}. Une seule est utilisée et les autres ne font rien. Supprimez-les dans Paramètres > Tableaux de bord > Ressources."
+    }
   }
 }

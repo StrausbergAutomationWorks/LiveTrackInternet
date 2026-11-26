@@ -62,5 +62,15 @@
         "name": "الوصلات البرية"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "أضف بطاقة خريطة Live Track إلى مواردك",
+      "description": "موارد لوحات التحكم لديك مضبوطة في YAML، لذلك لا يمكن تسجيل بطاقة الخريطة تلقائيًا. أضف ما يلي تحت lovelace: resources: في configuration.yaml، ثم أعد التشغيل:\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "بطاقة خريطة Live Track مسجّلة أكثر من مرة",
+      "description": "موارد لوحات التحكم هذه تحمّل بطاقة الخريطة أيضًا: {urls}. لا يُستخدم إلا واحد منها، والباقي لا يفعل شيئًا. احذفها في إعدادات > لوحات التحكم > الموارد."
+    }
   }
 }

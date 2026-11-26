@@ -62,5 +62,15 @@
         "name": "Landverbindungen"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "Live-Track-Kartenkarte zu Ihren Ressourcen hinzufügen",
+      "description": "Die Ressourcen Ihrer Dashboards sind in YAML festgelegt, daher kann die Kartenkarte nicht automatisch registriert werden. Fügen Sie dies unter lovelace: resources: in configuration.yaml hinzu und starten Sie dann neu:\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "Die Live-Track-Kartenkarte ist mehr als einmal registriert",
+      "description": "Diese Dashboard-Ressourcen laden die Kartenkarte ebenfalls: {urls}. Nur eine wird verwendet, die anderen bewirken nichts. Entfernen Sie sie unter Einstellungen > Dashboards > Ressourcen."
+    }
   }
 }

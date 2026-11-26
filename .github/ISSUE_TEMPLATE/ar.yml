@@ -1,0 +1,66 @@
+name: "العربية: اقتراح أو مشكلة أو مساعدة"
+description: "اقترح شيئًا، أو أبلغ عن مشكلة، أو أضف شيئًا بمساعدتنا. لا حاجة إلى معرفة البرمجة."
+labels: ["lang: ar"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        شكرًا لك. أجب عمّا تستطيع واترك الباقي فارغًا. لا تحتاج إلى معرفة أي شيء عن البرمجة. يمكنك الكتابة بالعربية أو بأي لغة أخرى.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: "ما موضوع هذا؟"
+      options:
+        - "اقتراح: بلد، أو مصدر بيانات، أو ميزة"
+        - "مشكلة: شيء خاطئ، أو ناقص، أو يصعب فهمه"
+        - "أودّ أن أضيف شيئًا بمساعدتكم"
+        - "شيء آخر"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "أخبرنا عنه"
+      description: "ما تودّه، أو ما حدث، أو ما يدور في ذهنك."
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: "أين في العالم؟"
+      description: "بلد أو منطقة أو مدينة، إن كان ذلك مهمًا."
+  - type: textarea
+    id: source
+    attributes:
+      label: "أين تُنشر البيانات؟ (اختياري)"
+      description: "رابط إلى صفحة بيانات مفتوحة، أو موجز عام، أو موقع خدمة، إن كنت تعرف واحدًا."
+  - type: input
+    id: ha_version
+    attributes:
+      label: "إصدار Home Assistant (عند وجود مشكلة)"
+      description: "تجده في إعدادات ← معلومات."
+  - type: input
+    id: version
+    attributes:
+      label: "إصدار هذا التكامل (عند وجود مشكلة)"
+      description: "يعرضه Marketplace (HACS) بجانب الاسم."
+  - type: input
+    id: language
+    attributes:
+      label: "لغة Home Assistant لديك"
+      description: "فقط إن كانت المشكلة في الصياغة أو في ترجمة."
+  - type: textarea
+    id: logs
+    attributes:
+      label: "رسائل الخطأ (اختياري)"
+      description: "إعدادات ← النظام ← السجلات. انسخ الأسطر التي تذكر هذا التكامل. اتركه فارغًا إن لم تكن متأكدًا."
+      render: text
+  - type: dropdown
+    id: experience
+    attributes:
+      label: "هل فعلت شيئًا كهذا من قبل؟ (اختياري)"
+      description: "كي نعرف كم نشرح. كل إجابة مرحّب بها."
+      options:
+        - "لا، هذه أول مرة"
+        - "قليلًا"
+        - "نعم"

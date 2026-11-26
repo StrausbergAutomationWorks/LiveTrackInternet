@@ -62,5 +62,15 @@
         "name": "陆地链路"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "把 Live Track 地图卡片添加到你的资源中",
+      "description": "你的仪表盘资源是在 YAML 中设置的，所以地图卡片无法自动注册。请在 configuration.yaml 的 lovelace: resources: 下添加以下内容，然后重启：\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "Live Track 地图卡片被注册了不止一次",
+      "description": "这些仪表盘资源也加载了地图卡片：{urls}。只有一个会被使用，其他的不起作用。请在 设置 > 仪表盘 > 资源 中删除它们。"
+    }
   }
 }

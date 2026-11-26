@@ -62,5 +62,15 @@
         "name": "Collegamenti terrestri"
       }
     }
+  },
+  "issues": {
+    "map_card_yaml_resource": {
+      "title": "Aggiungi la scheda mappa di Live Track alle tue risorse",
+      "description": "Le risorse delle tue plance sono definite in YAML, quindi la scheda mappa non può essere registrata automaticamente. Aggiungi questo sotto lovelace: resources: in configuration.yaml, poi riavvia:\n\n- url: {url}\n  type: module"
+    },
+    "map_card_duplicate_resources": {
+      "title": "La scheda mappa di Live Track è registrata più di una volta",
+      "description": "Anche queste risorse delle plance caricano la scheda mappa: {urls}. Ne viene usata una sola e le altre non fanno nulla. Rimuovile in Impostazioni > Plance > Risorse."
+    }
   }
 }
