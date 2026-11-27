@@ -23,7 +23,7 @@ cavo, quel cavo viene disegnato in rosso.
 > [Suggeriscilo](#aiutaci-a-farlo-crescere), o aggiungilo tu: ti aiuteremo a
 > farlo.
 
-**Stato: 0.3.3, pubblicato.** Nel catalogo del Marketplace ([installalo più
+**Stato: 0.3.4, pubblicato.** Nel catalogo del Marketplace ([installalo più
 sotto](#installazione-passo-dopo-passo)).
 
 Opera originale di StrausbergAutomationWorks. Non affiliato con, né approvato
@@ -299,8 +299,10 @@ regola `- domain: geo_location` in più per ogni fonte.
   conservata nel suo browser.
 * Ogni interruzione è un'immagine rotonda della sua causa, con accanto il
   codice di due lettere del paese. **Punta** su di essa per vedere dove e
-  perché; **clicca** per la descrizione di Cloudflare e un collegamento alla
-  notizia.
+  perché; **clicca** per la descrizione di Cloudflare, un collegamento alla
+  notizia e la pagina del traffico di Cloudflare Radar per ogni rete, regione
+  o paese che l'interruzione nomina, dal giorno prima del suo inizio (al
+  massimo quattro collegamenti).
 * **Clicca** su un cavo per nome, proprietari, lunghezza e paesi di approdo. I
   collegamenti terrestri non sono cliccabili.
 * La **scheda filtro** (`custom:live-track-map-filter-card`) può nascondere le
@@ -419,7 +421,7 @@ Su ogni indicatore: `outage_cause` e `outage_type` (le parole di Cloudflare,
 per esempio `POWER_OUTAGE`, `NATIONWIDE`), `started_at`, `place_kind`
 (`region`, `country` o `network`), `country_code`, `country_name`,
 `region_name`, `asns` e `asn_names` quando la scheda nomina delle reti,
-`description`, `linked_url` (la notizia), `cables_named` quando la descrizione
+`description`, `linked_url` (la notizia), `marker_links` (i collegamenti che mostra un clic), `cables_named` quando la descrizione
 nomina un cavo, e `marker_group` (la causa, per la scheda filtro).
 
 ### Cavi con problemi

@@ -21,7 +21,7 @@ kabel noemt, wordt die kabel rood getekend.
 > Ontbreekt er iets? [Stel het voor](#help-het-groeien), of voeg het zelf toe:
 > we helpen je daarbij.
 
-**Status: 0.3.3, uitgebracht.** In de catalogus van de Marktplaats ([installeer
+**Status: 0.3.4, uitgebracht.** In de catalogus van de Marktplaats ([installeer
 het hieronder](#installeren-stap-voor-stap)).
 
 Eigen werk van StrausbergAutomationWorks. Niet verbonden met, of
@@ -299,7 +299,10 @@ regel `- domain: geo_location` voor elke bron.
   land**. De keuze van elke kijker wordt in zijn eigen browser bewaard.
 * Elke storing is een rond plaatje van haar oorzaak met de landcode van twee
   letters ernaast. **Wijs** het aan om te zien waar en waarom; **klik** erop
-  voor de beschrijving van Cloudflare en een link naar het bericht.
+  voor de beschrijving van Cloudflare, een link naar het bericht en de
+  verkeerspagina van Cloudflare Radar voor elk netwerk, elke regio of elk land
+  dat de storing noemt, vanaf de dag voor het begin ervan (hoogstens vier
+  links).
 * **Klik** op een kabel voor naam, eigenaars, lengte en aanlandingslanden.
   Verbindingen over land zijn niet aanklikbaar.
 * De **filterkaart** (`custom:live-track-map-filter-card`) kan storingen naar
@@ -419,7 +422,7 @@ Op elke markering: `outage_cause` en `outage_type` (de eigen woorden van
 Cloudflare, bijvoorbeeld `POWER_OUTAGE`, `NATIONWIDE`), `started_at`,
 `place_kind` (`region`, `country` of `network`), `country_code`,
 `country_name`, `region_name`, `asns` en `asn_names` als de melding netwerken
-noemt, `description`, `linked_url` (het bericht), `cables_named` als de
+noemt, `description`, `linked_url` (het bericht), `marker_links` (de links die een klik toont), `cables_named` als de
 beschrijving een kabel noemt, en `marker_group` (de oorzaak, voor de
 filterkaart).
 

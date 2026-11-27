@@ -21,7 +21,7 @@ die ITU erfasst. Nennt ein Ausfall ein Kabel, wird dieses Kabel rot gezeichnet.
 > etwas? [Schlagen Sie es vor](#helfen-sie-mit-es-zu-erweitern), oder fügen Sie
 > es selbst hinzu: Wir helfen Ihnen dabei.
 
-**Status: 0.3.3, veröffentlicht.** Im Katalog des Marketplace ([Installation
+**Status: 0.3.4, veröffentlicht.** Im Katalog des Marketplace ([Installation
 unten](#installation-schritt-für-schritt)).
 
 Eigenes Werk von StrausbergAutomationWorks. Nicht verbunden mit oder
@@ -306,8 +306,10 @@ Andere Live-Track-Module kommen genauso in `entity_filter`: eine weitere Regel
   Browser gespeichert.
 * Jeder Ausfall ist ein rundes Bild seiner Ursache mit dem zweibuchstabigen
   Landeskürzel daneben. **Zeigen** Sie darauf, um zu sehen, wo und warum;
-  **klicken** Sie darauf für Cloudflares Beschreibung und einen Link zum
-  Bericht.
+  **klicken** Sie darauf für Cloudflares Beschreibung, einen Link zum
+  Bericht und die Verkehrsseite von Cloudflare Radar für jedes Netz, jede
+  Region oder jedes Land, das der Ausfall nennt, ab dem Tag vor seinem Beginn
+  (höchstens vier Links).
 * **Klicken** Sie auf ein Kabel für Name, Eigentümer, Länge und Anlandeländer.
   Landverbindungen sind nicht anklickbar.
 * Die **Filterkarte** (`custom:live-track-map-filter-card`) kann Ausfälle nach
@@ -428,7 +430,7 @@ An jeder Markierung: `outage_cause` und `outage_type` (Cloudflares eigene
 Wörter, zum Beispiel `POWER_OUTAGE`, `NATIONWIDE`), `started_at`, `place_kind`
 (`region`, `country` oder `network`), `country_code`, `country_name`,
 `region_name`, `asns` und `asn_names`, wenn der Eintrag Netze nennt,
-`description`, `linked_url` (der Bericht), `cables_named`, wenn die
+`description`, `linked_url` (der Bericht), `marker_links` (die Links, die ein Klick zeigt), `cables_named`, wenn die
 Beschreibung ein Kabel nennt, und `marker_group` (die Ursache, für die
 Filterkarte).
 

@@ -8,11 +8,12 @@ without it.
 * The record shape is Live Track Weather's (key, name, lat, lon, attrs), contract D20. D0: anything unknown is
   OMITTED, never sent as a placeholder; no last_seen, observed_at or previous_* (a record has no update time and
   does not move).
+* Links (5.3): the record's report, then Radar's own traffic page for each place, at most four (D4g).
 """
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from collections.abc import Callable
 from typing import Any
@@ -21,6 +22,8 @@ from .const import (ATTRIBUTION, BACKOFF_S, CAUSE_CLASS, CAUSE_WORDS, CLASSES, R
 
 TITLE_MAX = 200
 TEXT_MAX = 4000
+RADAR_TRAFFIC = "https://radar.cloudflare.com/traffic/"
+LINKS_MAX = 4  # contract D4g: at most four marker_links
 
 
 def parse_time(value: Any) -> datetime | None:
@@ -184,6 +187,43 @@ def _https(url: Any) -> str | None:
     return url if isinstance(url, str) and url.startswith("https://") and len(url) < 2000 else None
 
 
+def radar_links(rec: dict[str, Any], p: dict[str, Any], started: datetime | None) -> list[dict[str, str]]:
+    """Radar's own traffic pages for one marker (SSOT 5.3, decided 2026-11-26): one link per place. The networks
+    the outage names (on a marker placed by network, those registered in that marker's country), else the region,
+    else the country. `dateStart` is the day before the outage began, in UTC: the padding Radar's own Outage Center
+    uses (MEASURED in a browser 2026-11-26). An open outage carries no `dateEnd`, as Radar's own links for an
+    ongoing one; only open outages are drawn."""
+    q = f"?dateStart={(started.astimezone(timezone.utc).date() - timedelta(days=1)).isoformat()}" if started else ""
+    nets: list[tuple[int, str]] = []
+    for a in rec.get("asnsDetails") or []:
+        try:
+            n = int((a or {}).get("asn"))
+        except (TypeError, ValueError):
+            continue
+        cc = (((a or {}).get("location") or {}).get("code") or "").upper()
+        if p["kind"] == "network" and cc != p.get("country_code"):
+            continue
+        nets.append((n, (a or {}).get("name") or ""))
+    if not nets and p["kind"] != "network":
+        for a in rec.get("asns") or []:
+            try:
+                nets.append((int(a), ""))
+            except (TypeError, ValueError):
+                continue
+    if nets:
+        seen: dict[int, str] = {}
+        for n, nm in nets:
+            seen.setdefault(n, nm)
+        return [{"label": (f"Radar: AS{n} {nm}" if nm else f"Radar: AS{n}")[:60], "url": f"{RADAR_TRAFFIC}as{n}{q}"}
+                for n, nm in seen.items()]
+    if p["kind"] == "region" and p.get("region_geoid"):
+        return [{"label": f"Radar: {p['region_name']}"[:60], "url": f"{RADAR_TRAFFIC}{p['region_geoid']}{q}"}]
+    if p.get("country_code"):
+        return [{"label": f"Radar: {p.get('country_name') or p['country_code']}"[:60],
+                 "url": f"{RADAR_TRAFFIC}{p['country_code'].lower()}{q}"}]
+    return []
+
+
 def build_markers(records: list[dict[str, Any]], countries: dict[str, dict[str, Any]],
                   regions: dict[str, dict[str, Any] | None], icon_base: str,
                   name_cables: Callable[[str], list[str]] | None = None,
@@ -263,9 +303,12 @@ def build_markers(records: list[dict[str, Any]], countries: dict[str, dict[str, 
                 attrs["asn_names"] = names
             if desc:
                 attrs["description"] = desc
+            links = [{"label": "Report", "url": link}] if link else []
+            links += radar_links(rec, p, started)
             if link:
                 attrs["linked_url"] = link
-                attrs["marker_links"] = [{"label": "Report", "url": link}]
+            if links:
+                attrs["marker_links"] = links[:LINKS_MAX]
             if named:
                 attrs["cables_named"] = list(named)
             markers.append({"key": key, "name": name, "lat": round(p["lat"], 5), "lon": round(p["lon"], 5),

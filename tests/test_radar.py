@@ -107,7 +107,9 @@ class TestAttributes(unittest.TestCase):
                          ("power", "Power outage", 2))
         self.assertEqual(a["started_at"], "2026-11-23T15:30:00+00:00")
         self.assertEqual(a["outage_type"], "NATIONWIDE")
-        self.assertEqual(a["marker_links"], [{"label": "Report", "url": "https://example.org/post/1"}])
+        self.assertEqual(a["marker_links"], [{"label": "Report", "url": "https://example.org/post/1"},
+                                             {"label": "Radar: Côte d'Ivoire",
+                                              "url": "https://radar.cloudflare.com/traffic/ci?dateStart=2026-11-22"}])
         self.assertEqual(a["attribution"], const.ATTRIBUTION)
         self.assertEqual(a["marker_info"]["title"], "Côte d'Ivoire: power outage")
         self.assertEqual(a["marker_info"]["text"].split("\n"),
@@ -119,7 +121,9 @@ class TestAttributes(unittest.TestCase):
         r = rec("21", locations=["CI"], desc="", link="http://example.org/x")
         r["startDate"] = None
         a = radar.build_markers([r], COUNTRIES, REGIONS, ICONS)[0][0]["attrs"]
-        for k in ("description", "linked_url", "marker_links", "started_at", "last_seen", "observed_at",
+        self.assertEqual(a["marker_links"], [{"label": "Radar: Côte d'Ivoire",
+                                             "url": "https://radar.cloudflare.com/traffic/ci"}])
+        for k in ("description", "linked_url", "started_at", "last_seen", "observed_at",
                   "previous_latitude", "icon_rotation_deg", "asns"):
             self.assertNotIn(k, a)
         self.assertNotIn(None, a.values())
@@ -136,6 +140,60 @@ class TestAttributes(unittest.TestCase):
         self.assertEqual(m[0]["attrs"]["marker_group"], "unknown")
         self.assertEqual(m[0]["name"], "Côte d'Ivoire: solar flare")
         self.assertEqual(m[0]["attrs"]["outage_cause"], "SOLAR_FLARE")
+
+
+
+class TestRadarLinks(unittest.TestCase):
+    """SSOT 5.3, decided 2026-11-26: one link per place; network, else region, else country; Radar's padding."""
+    T = "https://radar.cloudflare.com/traffic/"
+
+    def links(self, r):
+        return [x["marker_links"] if "marker_links" in x else None for x in
+                [m["attrs"] for m in radar.build_markers([r], COUNTRIES, REGIONS, ICONS)[0]]]
+
+    def test_network_page_when_the_outage_names_one(self):
+        r = rec("30", otype="REGIONAL", locations=["UA"], asns=[("15796", "X-NET", "CH")], geo=["686966"], link=None)
+        self.assertEqual(self.links(r), [[{"label": "Radar: AS15796 X-NET",
+                                           "url": self.T + "as15796?dateStart=2026-11-22"}]])
+
+    def test_network_only_each_marker_its_own_networks(self):
+        r = rec("31", otype="NETWORK", asns=[("1", "A", "CH"), ("2", "B", "RU"), ("3", "C", "CH")], link=None)
+        self.assertEqual(self.links(r), [
+            [{"label": "Radar: AS1 A", "url": self.T + "as1?dateStart=2026-11-22"},
+             {"label": "Radar: AS3 C", "url": self.T + "as3?dateStart=2026-11-22"}],
+            [{"label": "Radar: AS2 B", "url": self.T + "as2?dateStart=2026-11-22"}]])
+
+    def test_region_page_otherwise(self):
+        r = rec("32", otype="REGIONAL", locations=["PE"], geo=["111", "222"], link=None)
+        self.assertEqual(self.links(r), [[{"label": "Radar: Region A", "url": self.T + "111?dateStart=2026-11-22"}],
+                                         [{"label": "Radar: Region B", "url": self.T + "222?dateStart=2026-11-22"}]])
+
+    def test_country_page_otherwise_report_first(self):
+        self.assertEqual(self.links(rec("33", locations=["CI"])),
+                         [[{"label": "Report", "url": "https://example.org/post/1"},
+                           {"label": "Radar: Côte d'Ivoire", "url": self.T + "ci?dateStart=2026-11-22"}]])
+
+    def test_at_most_four_links_report_kept(self):
+        nets = [(str(n), f"N{n}", "CI") for n in range(10, 16)]
+        out = self.links(rec("34", locations=["CI"], asns=nets))[0]
+        self.assertEqual(len(out), 4)
+        self.assertEqual(out[0]["label"], "Report")
+        self.assertEqual([x["url"] for x in out[1:]],
+                         [self.T + f"as{n}?dateStart=2026-11-22" for n in (10, 11, 12)])
+
+    def test_padding_is_the_utc_day_before(self):
+        for start, day in (("2026-11-23T00:15:00Z", "2026-11-22"), ("2026-11-01T05:00:00Z", "2026-10-31"),
+                           ("2026-01-01T23:59:00+00:00", "2025-12-31"), ("2026-11-23T01:00:00+05:00", "2026-11-21")):
+            r = rec("35", locations=["CI"], link=None)
+            r["startDate"] = start
+            self.assertEqual(self.links(r)[0][0]["url"], self.T + f"ci?dateStart={day}")
+
+    def test_never_a_date_end_and_all_https(self):
+        for r in (rec("36", locations=["CI"]), rec("37", otype="NETWORK", asns=[("9", "Z", "RU")])):
+            for links in self.links(r):
+                for x in links:
+                    self.assertTrue(x["url"].startswith("https://"))
+                    self.assertNotIn("dateEnd", x["url"])
 
 
 class TestLookups(unittest.TestCase):

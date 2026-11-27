@@ -20,7 +20,7 @@ cable, that cable is drawn in red.
 > (internet exchanges and data centres are planned). Is something missing?
 > [Suggest it](#help-it-grow), or add it yourself: we will help you do it.
 
-**Status: 0.3.3, released.** In the Marketplace's catalog ([install it
+**Status: 0.3.4, released.** In the Marketplace's catalog ([install it
 below](#install-it-step-by-step)).
 
 Original work by StrausbergAutomationWorks. Not affiliated with, or endorsed
@@ -284,7 +284,9 @@ Other Live Track modules go in `entity_filter` the same way: one more
   Each viewer's choice is kept in their own browser.
 * Each outage is a round picture of its cause with the country's two-letter
   code beside it. **Point at** it to see where and why; **click** it for
-  Cloudflare's description and a link to the report.
+  Cloudflare's description, a link to the report, and Cloudflare Radar's
+  traffic page for each network, region or country it names, from the day
+  before the outage began (at most four links).
 * **Click** a cable for its name, owners, length and landing countries.
   Terrestrial links are not clickable.
 * The **filter card** (`custom:live-track-map-filter-card`) can hide outages by
@@ -397,7 +399,7 @@ On each marker: `outage_cause` and `outage_type` (Cloudflare's own words, for
 example `POWER_OUTAGE`, `NATIONWIDE`), `started_at`, `place_kind` (`region`,
 `country` or `network`), `country_code`, `country_name`, `region_name`,
 `asns` and `asn_names` when the record names networks, `description`,
-`linked_url` (the report), `cables_named` when the description names a cable,
+`linked_url` (the report), `marker_links` (the links a click shows), `cables_named` when the description names a cable,
 and `marker_group` (the cause, for the filter card).
 
 ### Cables in trouble

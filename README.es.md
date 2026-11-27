@@ -21,7 +21,7 @@ Cuando un corte nombra un cable, ese cable se dibuja en rojo.
 > de datos). ¿Falta algo? [Sugiérelo](#ayúdanos-a-hacerlo-crecer), o añádelo tú
 > mismo: te ayudaremos a hacerlo.
 
-**Estado: 0.3.3, publicado.** En el catálogo del Marketplace ([instálalo más
+**Estado: 0.3.4, publicado.** En el catálogo del Marketplace ([instálalo más
 abajo](#instalación-paso-a-paso)).
 
 Obra original de StrausbergAutomationWorks. Sin relación con, ni respaldo de,
@@ -298,7 +298,9 @@ regla `- domain: geo_location` más por cada fuente.
   propio navegador.
 * Cada corte es una imagen redonda de su causa con el código de dos letras del
   país al lado. **Apunta** a ella para ver dónde y por qué; **haz clic** para
-  ver la descripción de Cloudflare y un enlace a la noticia.
+  ver la descripción de Cloudflare, un enlace a la noticia y la página de
+  tráfico de Cloudflare Radar de cada red, región o país que nombra el corte,
+  desde el día antes de su comienzo (cuatro enlaces como máximo).
 * **Haz clic** en un cable para ver su nombre, sus propietarios, su longitud y
   sus países de amarre. Los enlaces terrestres no se pueden pulsar.
 * La **tarjeta de filtro** (`custom:live-track-map-filter-card`) puede ocultar
@@ -418,7 +420,7 @@ En cada marcador: `outage_cause` y `outage_type` (las palabras propias de
 Cloudflare, por ejemplo `POWER_OUTAGE`, `NATIONWIDE`), `started_at`,
 `place_kind` (`region`, `country` o `network`), `country_code`,
 `country_name`, `region_name`, `asns` y `asn_names` cuando el registro nombra
-redes, `description`, `linked_url` (la noticia), `cables_named` cuando la
+redes, `description`, `linked_url` (la noticia), `marker_links` (los enlaces que muestra un clic), `cables_named` cuando la
 descripción nombra un cable, y `marker_group` (la causa, para la tarjeta de
 filtro).
 

@@ -23,7 +23,7 @@ est dessiné en rouge.
 > [Proposez-le](#aidez-le-à-grandir), ou ajoutez-le vous-même : nous vous
 > aiderons à le faire.
 
-**État : 0.3.3, publié.** Dans le catalogue du Marketplace ([l'installer
+**État : 0.3.4, publié.** Dans le catalogue du Marketplace ([l'installer
 ci-dessous](#installation-pas-à-pas)).
 
 Œuvre originale de StrausbergAutomationWorks. Sans lien avec, ni approbation
@@ -305,7 +305,9 @@ règle `- domain: geo_location` de plus pour chaque source.
   est gardé dans son propre navigateur.
 * Chaque panne est une image ronde de sa cause, avec le code à deux lettres du
   pays à côté. **Pointez** dessus pour voir où et pourquoi ; **cliquez** dessus
-  pour la description de Cloudflare et un lien vers l'article.
+  pour la description de Cloudflare, un lien vers l'article et la page de
+  trafic de Cloudflare Radar pour chaque réseau, région ou pays que nomme la
+  panne, à partir de la veille de son début (quatre liens au plus).
 * **Cliquez** sur un câble pour son nom, ses propriétaires, sa longueur et ses
   pays d'atterrissement. Les liaisons terrestres ne sont pas cliquables.
 * La **carte de filtre** (`custom:live-track-map-filter-card`) peut masquer les
@@ -427,7 +429,7 @@ Sur chaque marqueur : `outage_cause` et `outage_type` (les mots de Cloudflare,
 par exemple `POWER_OUTAGE`, `NATIONWIDE`), `started_at`, `place_kind`
 (`region`, `country` ou `network`), `country_code`, `country_name`,
 `region_name`, `asns` et `asn_names` quand la fiche nomme des réseaux,
-`description`, `linked_url` (l'article), `cables_named` quand la description
+`description`, `linked_url` (l'article), `marker_links` (les liens qu'affiche un clic), `cables_named` quand la description
 nomme un câble, et `marker_group` (la cause, pour la carte de filtre).
 
 ### Câbles touchés

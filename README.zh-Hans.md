@@ -18,7 +18,7 @@ Live Track Internet 把 Cloudflare Radar 在世界各地记录的互联网中断
 > 中心）。缺少什么吗？[提出建议](#帮助它成长)，或者自己添加：我们会帮助你
 > 完成。
 
-**状态：0.3.3，已发布。** 已在 Marketplace 的目录中（[安装方法见下文](#安装步骤)）。
+**状态：0.3.4，已发布。** 已在 Marketplace 的目录中（[安装方法见下文](#安装步骤)）。
 
 StrausbergAutomationWorks 的原创作品。与 Cloudflare、Tristan Hotham、
 TeleGeography、国际电信联盟（ITU）以及任何光缆所有者或网络运营商均无关联，
@@ -266,7 +266,7 @@ entity_filter:
   **全部电缆**、**登陆点** 和 **陆地链路**。每位查看者的选择都保存在他自己的
   浏览器中。
 * 每次中断都是一个表示原因的圆形图片，旁边是国家的两字母代码。把指针**移到**
-  上面可以看到地点和原因；**点击**可查看 Cloudflare 的描述和报道链接。
+  上面可以看到地点和原因；**点击**可查看 Cloudflare 的描述、报道链接，以及该中断提到的每个网络、地区或国家在 Cloudflare Radar 上的流量页面（从中断开始的前一天起，最多四个链接）。
 * **点击**一条光缆可查看名称、所有者、长度和登陆国家。陆地链路不能点击。
 * **过滤卡片**（`custom:live-track-map-filter-card`）可以按原因隐藏中断。
 * 只要显示了某个来源的数据，该来源的署名就会出现在地图的署名行中。
@@ -363,7 +363,7 @@ Live Track Internet 每 15 分钟获取一次过去 24 小时的记录，并为�
 每个标记上有：`outage_cause` 和 `outage_type`（Cloudflare 自己的用词，例如
 `POWER_OUTAGE`、`NATIONWIDE`）、`started_at`、`place_kind`（`region`、`country`
 或 `network`）、`country_code`、`country_name`、`region_name`、记录提到网络时的
-`asns` 和 `asn_names`、`description`、`linked_url`（报道）、描述提到光缆时的
+`asns` 和 `asn_names`、`description`、`linked_url`（报道）、`marker_links`（点击时显示的链接）、描述提到光缆时的
 `cables_named`，以及 `marker_group`（原因，供过滤卡片使用）。
 
 ### 受影响的电缆
