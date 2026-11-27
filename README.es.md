@@ -21,9 +21,8 @@ Cuando un corte nombra un cable, ese cable se dibuja en rojo.
 > de datos). ¿Falta algo? [Sugiérelo](#ayúdanos-a-hacerlo-crecer), o añádelo tú
 > mismo: te ayudaremos a hacerlo.
 
-**Estado: 0.3.2, publicado.** Añadido al Marketplace por su enlace
-([más abajo](#instalación-paso-a-paso)); todavía no está en el catálogo del
-Marketplace.
+**Estado: 0.3.3, publicado.** En el catálogo del Marketplace ([instálalo más
+abajo](#instalación-paso-a-paso)).
 
 Obra original de StrausbergAutomationWorks. Sin relación con, ni respaldo de,
 Cloudflare, Tristan Hotham, TeleGeography, la Unión Internacional de
@@ -158,18 +157,17 @@ Todo es gratuito y de código abierto. No se reserva nada para patrocinadores.
 
 ### Desde el Marketplace (recomendado)
 
-Live Track Internet todavía no está en el catálogo del Marketplace. Añádelo
-por su enlace:
-
 1. En Home Assistant, abre **Configuración → Marketplace** (HACS).
-2. Elige la pestaña **Añadir desde enlace**.
-3. En **Enlace de GitHub**, escribe
-   `https://github.com/StrausbergAutomationWorks/LiveTrackInternet`
-   y, si te pide el **Tipo**, elige **Integración**.
-4. Busca **Live Track Internet** en la lista y elige **Instalar**.
-5. **Reinicia Home Assistant**: **Configuración → Sistema → Reparaciones**
+2. Busca **Live Track Internet** y ábrelo.
+3. Elige **Descargar** (o **Instalar**).
+4. **Reinicia Home Assistant**: **Configuración → Sistema → Reparaciones**
    ofrece el reinicio, o usa **Configuración → Sistema → Reiniciar Home
    Assistant**.
+
+Si la búsqueda no lo encuentra, añádelo por su enlace: elige la pestaña
+**Añadir desde enlace** (o el menú de tres puntos → **Repositorios
+personalizados**), escribe `StrausbergAutomationWorks/LiveTrackInternet`, elige
+**Integración** si te pide el tipo y continúa desde el paso 3.
 
 Después, el Marketplace te ofrece cada nueva versión como actualización.
 

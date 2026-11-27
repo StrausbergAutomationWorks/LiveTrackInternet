@@ -21,8 +21,8 @@
 > تبادل الإنترنت ومراكز البيانات مخطط لها). هل ينقص شيء؟
 > [اقترحه](#ساعدنا-على-توسيعه)، أو أضفه بنفسك: سنساعدك على ذلك.
 
-**الحالة: 0.3.2، صدر.** أُضيف إلى Marketplace عبر رابطه
-([أدناه](#التثبيت-خطوة-بخطوة))؛ وهو ليس في كتالوج Marketplace بعد.
+**الحالة: 0.3.3، صدر.** في كتالوج Marketplace ([التثبيت
+أدناه](#التثبيت-خطوة-بخطوة)).
 
 عمل أصلي من StrausbergAutomationWorks. لا علاقة له بـ Cloudflare أو Tristan
 Hotham أو TeleGeography أو الاتحاد الدولي للاتصالات (ITU) أو أي مالك كابلات أو
@@ -154,16 +154,15 @@ Hotham أو TeleGeography أو الاتحاد الدولي للاتصالات (I
 
 ### من Marketplace (موصى به)
 
-‏Live Track Internet ليس في كتالوج Marketplace بعد. أضفه عبر رابطه:
-
 1. في Home Assistant، افتح **إعدادات ← Marketplace** (HACS).
-2. اختر علامة التبويب **Add from link**.
-3. في **GitHub link**، أدخل
-   `https://github.com/StrausbergAutomationWorks/LiveTrackInternet`
-   وإذا سُئلت عن **Type**، فاختر **Integration**.
-4. ابحث عن **Live Track Internet** في القائمة واختر **Install**.
-5. **أعد تشغيل Home Assistant**: تعرض **إعدادات ← النظام ← الإصلاحات** إعادة
+2. ابحث عن **Live Track Internet** وافتحه.
+3. اختر **Download** (أو **Install**).
+4. **أعد تشغيل Home Assistant**: تعرض **إعدادات ← النظام ← الإصلاحات** إعادة
    التشغيل، أو استخدم **إعدادات ← النظام ← أعد تشغيل Home Assistant**.
+
+إذا لم يعثر البحث عليه، فأضفه عبر رابطه: اختر علامة التبويب **Add from link**،
+وأدخل `StrausbergAutomationWorks/LiveTrackInternet`، واختر **Integration** إذا
+سُئلت عن النوع، ثم تابع من الخطوة 3.
 
 بعد ذلك يعرض Marketplace كل إصدار جديد كتحديث.
 

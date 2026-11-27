@@ -21,9 +21,8 @@ kabel noemt, wordt die kabel rood getekend.
 > Ontbreekt er iets? [Stel het voor](#help-het-groeien), of voeg het zelf toe:
 > we helpen je daarbij.
 
-**Status: 0.3.2, uitgebracht.** Via de link aan de Marktplaats
-toegevoegd ([hieronder](#installeren-stap-voor-stap)); het staat nog niet in de
-catalogus van de Marktplaats.
+**Status: 0.3.3, uitgebracht.** In de catalogus van de Marktplaats ([installeer
+het hieronder](#installeren-stap-voor-stap)).
 
 Eigen werk van StrausbergAutomationWorks. Niet verbonden met, of
 onderschreven door, Cloudflare, Tristan Hotham, TeleGeography, de
@@ -161,18 +160,17 @@ Alles is gratis en open source. Niets wordt achtergehouden voor sponsors.
 
 ### Via de Marktplaats (aanbevolen)
 
-Live Track Internet staat nog niet in de catalogus van de Marktplaats. Voeg het
-toe via zijn link:
-
 1. Open in Home Assistant **Instellingen → Marktplaats** (HACS).
-2. Kies het tabblad **Via koppeling toevoegen**.
-3. Voer onder **GitHub link**
-   `https://github.com/StrausbergAutomationWorks/LiveTrackInternet`
-   in en kies, als om het **Type** wordt gevraagd, **Integratie**.
-4. Zoek **Live Track Internet** in de lijst en kies **Installeren**.
-5. **Herstart Home Assistant**: **Instellingen → Systeem → Reparaties** biedt
+2. Zoek **Live Track Internet** en open het.
+3. Kies **Downloaden** (of **Installeren**).
+4. **Herstart Home Assistant**: **Instellingen → Systeem → Reparaties** biedt
    de herstart aan, of gebruik **Instellingen → Systeem → Herstart Home
    Assistant**.
+
+Vindt de zoekfunctie het niet, voeg het dan toe via de link: kies het tabblad
+**Via koppeling toevoegen** (of het menu met drie puntjes → **Aangepaste
+repositories**), voer `StrausbergAutomationWorks/LiveTrackInternet` in, kies
+**Integratie** als om het type wordt gevraagd en ga daarna verder bij stap 3.
 
 De Marktplaats biedt daarna elke nieuwe release als update aan.
 

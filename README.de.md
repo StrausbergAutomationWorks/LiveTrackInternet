@@ -21,9 +21,8 @@ die ITU erfasst. Nennt ein Ausfall ein Kabel, wird dieses Kabel rot gezeichnet.
 > etwas? [Schlagen Sie es vor](#helfen-sie-mit-es-zu-erweitern), oder fügen Sie
 > es selbst hinzu: Wir helfen Ihnen dabei.
 
-**Status: 0.3.2, veröffentlicht.** Dem Marketplace per Link
-hinzugefügt ([unten](#installation-schritt-für-schritt)); im Katalog des
-Marketplace ist es noch nicht.
+**Status: 0.3.3, veröffentlicht.** Im Katalog des Marketplace ([Installation
+unten](#installation-schritt-für-schritt)).
 
 Eigenes Werk von StrausbergAutomationWorks. Nicht verbunden mit oder
 unterstützt von Cloudflare, Tristan Hotham, TeleGeography, der Internationalen
@@ -161,19 +160,18 @@ Alles ist kostenlos und quelloffen. Nichts wird für Sponsoren zurückgehalten.
 
 ### Über den Marketplace (empfohlen)
 
-Live Track Internet ist noch nicht im Katalog des Marketplace. Fügen Sie es
-über seinen Link hinzu:
-
 1. Öffnen Sie in Home Assistant **Einstellungen → Marketplace** (HACS).
-2. Wählen Sie den Reiter **Über Link hinzufügen**.
-3. Geben Sie unter **GitHub-Link**
-   `https://github.com/StrausbergAutomationWorks/LiveTrackInternet` ein. Wird
-   nach dem **Typ** gefragt, wählen Sie **Integration**.
-4. Suchen Sie **Live Track Internet** in der Liste und wählen Sie
-   **Installieren**.
-5. **Starten Sie Home Assistant neu**: **Einstellungen → System → Reparaturen**
+2. Suchen Sie nach **Live Track Internet** und öffnen Sie es.
+3. Wählen Sie **Herunterladen** (oder **Installieren**).
+4. **Starten Sie Home Assistant neu**: **Einstellungen → System → Reparaturen**
    bietet den Neustart an, oder nutzen Sie **Einstellungen → System → Home
    Assistant neu starten**.
+
+Findet die Suche es nicht, fügen Sie es per Link hinzu: wählen Sie den Reiter
+**Über Link hinzufügen** (oder das Dreipunktmenü → **Benutzerdefinierte
+Repositories**), geben Sie `StrausbergAutomationWorks/LiveTrackInternet` ein,
+wählen Sie **Integration**, wenn nach dem Typ gefragt wird, und fahren Sie dann
+mit Schritt 3 fort.
 
 Der Marketplace bietet dann jede neue Veröffentlichung als Aktualisierung an.
 

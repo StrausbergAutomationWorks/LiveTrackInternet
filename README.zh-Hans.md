@@ -18,8 +18,7 @@ Live Track Internet 把 Cloudflare Radar 在世界各地记录的互联网中断
 > 中心）。缺少什么吗？[提出建议](#帮助它成长)，或者自己添加：我们会帮助你
 > 完成。
 
-**状态：0.3.2，已发布。** 已通过链接添加到 Marketplace（[见下文](#安装步骤)）；
-它还不在 Marketplace 的目录中。
+**状态：0.3.3，已发布。** 已在 Marketplace 的目录中（[安装方法见下文](#安装步骤)）。
 
 StrausbergAutomationWorks 的原创作品。与 Cloudflare、Tristan Hotham、
 TeleGeography、国际电信联盟（ITU）以及任何光缆所有者或网络运营商均无关联，
@@ -147,16 +146,13 @@ Live Track 是一组 Home Assistant 集成，每种移动的东西对应一个�
 
 ### 通过 Marketplace（推荐）
 
-Live Track Internet 还不在 Marketplace 的目录中。请通过它的链接添加：
-
 1. 在 Home Assistant 中打开 **设置 → Marketplace**（HACS）。
-2. 选择 **从链接添加** 选项卡。
-3. 在 **GitHub 链接** 中输入
-   `https://github.com/StrausbergAutomationWorks/LiveTrackInternet`
-   并在询问 **类型** 时选择 **集成**。
-4. 在列表中找到 **Live Track Internet**，选择 **安装**。
-5. **重启 Home Assistant**：**设置 → 系统 → 修复** 会提供重启，或者使用
+2. 搜索 **Live Track Internet** 并打开它。
+3. 选择 **下载**（或 **安装**）。
+4. **重启 Home Assistant**：**设置 → 系统 → 修复** 会提供重启，或者使用
    **设置 → 系统 → 重启 Home Assistant**。
+
+如果搜索找不到它，就通过链接添加：选择 **从链接添加** 选项卡（或三点菜单 → **自定义存储库**），输入 `StrausbergAutomationWorks/LiveTrackInternet`，如果询问类型，选择 **集成**，然后从第 3 步继续。
 
 之后，Marketplace 会把每个新版本作为更新提供给你。
 
